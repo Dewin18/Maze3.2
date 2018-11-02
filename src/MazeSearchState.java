@@ -45,12 +45,25 @@ public class MazeSearchState implements SearchState {
 	 * @param maze the Maze for which the StartStates should be generated
 	 * @return a List containing all start states for the given maze.
 	 */
-	public static List<SearchState> getStartStates(Maze maze) {
-		List<SearchState> startStates = new LinkedList<SearchState>();
+	public static List<MazeSearchState> getStartStates(Maze maze) {
+		List<MazeSearchState> startStates = new LinkedList<MazeSearchState>();
 		for (Point start: maze.getStartingPoints()) {
 			startStates.add(new MazeSearchState(maze, start));
 		}
 		return startStates;
+		
+	}
+	
+	public void print() {
+		maze.print(position);
+	}
+	
+	@Override
+	public boolean equals(SearchState state) {
+		if (!(state instanceof MazeSearchState)) {
+			return false;
+		}
+		return position == ((MazeSearchState) state).position;
 		
 	}
 

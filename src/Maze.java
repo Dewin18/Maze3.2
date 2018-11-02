@@ -101,11 +101,12 @@ public class Maze {
 				} else {
 					char markedSpot;
 					switch(maze[x][y]) {
-						case ' ' : markedSpot = '|';
-						case 's' : markedSpot = '$';
-						case 'g' : markedSpot = '§';
+						case ' ' : markedSpot = '|'; break;
+						case 's' : markedSpot = '$'; break;
+						case 'g' : markedSpot = '§'; break;
 						default: markedSpot = maze[x][y];
 					}
+					System.out.print(markedSpot);
 				}
 					
 			}	

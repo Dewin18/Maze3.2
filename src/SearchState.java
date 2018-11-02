@@ -19,5 +19,13 @@ public interface SearchState {
 	 * @return true, if the current state is a goal state
 	 */
 	public boolean isGoalState();
+
+	
+	/**
+	 * 
+	 */
+	public void print();
+
+	boolean equals(SearchState state);
 	
 }
