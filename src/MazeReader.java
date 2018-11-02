@@ -42,7 +42,8 @@ public class MazeReader {
     }
 
     /**
-     * Maps each char from the maze.txt file to the 2D array as a spot
+     * create for each char from the maze.txt file a new Spot object and place it
+     * into the 2D array (maze[][]).
      * 
      * @param currentRow
      * @param line of chars
