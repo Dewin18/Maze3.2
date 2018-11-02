@@ -13,6 +13,7 @@ public class MazeReader {
      * 
      * @param rows of the maze
      * @param columns of the maze
+     * @param mazePath local path to the maze.txt
      */
     public MazeReader(int rows, int columns, String mazePath) {
 	this.rows = rows;
