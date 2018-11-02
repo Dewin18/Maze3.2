@@ -50,7 +50,7 @@ public class MazeReader {
     private void mazeMapping(int currentRow, String line) {
 	for (int i = 0; i < line.length(); i++) {
 	    char mazeSymbol = line.charAt(i);
-	    maze[currentRow][i] = new Spot(currentRow + "" + i, mazeSymbol);
+	    maze[currentRow][i] = new Spot(currentRow + "." + i, mazeSymbol);
 	}
     }
 
