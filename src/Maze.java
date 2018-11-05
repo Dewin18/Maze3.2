@@ -2,11 +2,12 @@ import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Class representing a 2D char-Maze
+ * Class representing a 2D char-Maze with portals
  *
  */
 public class Maze {
@@ -19,11 +20,15 @@ public class Maze {
 	
 	private int maxColumns;
 	
-    private Maze(char[][] maze, int rows, int columns, List<Point> startingPoints) {
+    private HashMap<Point, Point> portals;
+	
+	private Maze(char[][] maze, int rows, int columns) {
 		this.maze = maze;
 		this.maxColumns = columns;
 		this.maxRows = rows;
-		this.startingPoints = startingPoints;
+		this.startingPoints = new LinkedList<Point>();
+		this.portals = new HashMap<Point,Point>();
+		
 		
 	}
     
@@ -36,31 +41,45 @@ public class Maze {
 		return startingPoints;
 	}
 
+	public HashMap<Point, Point> getPortals() {
+		return portals;
+	}
+
 	/**
      * maps a String to the given row of the given char-array
      * 
      * @param currentRow index of the current row
      * @param line a String consisting of the chars to map to the current row
      * @param maze a 2D char Array onto which the Line should be mapped
-     * 
-     * @return A List containing the positions of 's' within the String
+	 * @throws Exception 
      */
-    private static List<Integer> mapLineToMazeArray(int currentRow, String line, char[][] maze) {
+    private static void mapLineToMazeArray(int currentRow, String line, Maze maze, HashMap<Integer,Point> portalPoints) throws Exception {
     	char mazeSymbol;
-    	//prepare List of starting Points
-    	List<Integer> startingPoints = new LinkedList<Integer>();
-    	//a loop over each x-postion of the current row of the maze
-    	for (int i = 0; i < maze.length; i++) {
+    	//loop over each x-position of the current row of the maze
+    	for (int i = 0; i < maze.maxColumns; i++) {
 		    //if string is too short fill up with 'x's
     		mazeSymbol = (i < line.length()) ? line.charAt(i) : 'x';
 		    //if symbol is 's' add x-position to Starting points
     		if (mazeSymbol == 's') {
-		    	startingPoints.add(i);
+    			maze.startingPoints.add(new Point(i,currentRow));
 		    }
+    		if (Character.isDigit(mazeSymbol)) {
+    			int digit = Character.getNumericValue(mazeSymbol);
+    			boolean containsDigit = portalPoints.containsKey(digit);
+    			Point p = portalPoints.put(digit, new Point(i,currentRow));
+    			if (p != null) {
+    				maze.portals.put(new Point(i,currentRow), p);
+    			    maze.portals.put(p, new Point(i,currentRow));
+    			    portalPoints.put(digit, null);
+    			} else if (containsDigit){
+    				throw new Exception("Portal mapping ambigous");
+    			}
+    			
+    		}
     		//Fill the current position with the corresponding char of the String 
-		    maze[i][currentRow] = mazeSymbol;
+		    maze.maze[i][currentRow] = mazeSymbol;
 		}
-    	return startingPoints;
+
     }
 	
 	/**
@@ -85,24 +104,29 @@ public class Maze {
 		    fileReader = new FileReader(pathToFile);
 		    bufferedReader = new BufferedReader(fileReader);
 		    int row = 0;
-		    //setup new 2D char array with the determined dimensions
-		    char[][] maze = new char[maxLineLength][rowCount];
-		    //prepare List of starting Points
-		    List<Point> startingPoints = new LinkedList<Point>();
-		    //read maze into 2D char array
+		    
+		    //setup new Maze with the determined dimensions
+		    Maze maze = new Maze(new char[maxLineLength][rowCount], rowCount, maxLineLength);
+		    
+		    //Setup Map for Portal Points
+		    HashMap<Integer, Point> portalPoints = new HashMap<Integer, Point>();
+		    
+		    //read maze into 2D char array		
 		    while ((line = bufferedReader.readLine()) != null) {
 		    	//loop over all returned starting positions 
-		    	for(Integer xPosition: mapLineToMazeArray(row, line, maze)) {
-		    		// add corresponding point to starting point.
-		    		startingPoints.add(new Point(xPosition,row));
-		    	}
+		    	
+				mapLineToMazeArray(row, line, maze, portalPoints);
+
 		    	row++;
 		    }
 		    bufferedReader.close();
 		    //return the encoded Maze
-		    return new Maze(maze, rowCount, maxLineLength, startingPoints);
+		    return maze;
 		} catch (IOException e) {
 		    e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		return null;
@@ -131,7 +155,7 @@ public class Maze {
 						case ' ' : markedSpot = '|'; break;
 						case 's' : markedSpot = '$'; break;
 						case 'g' : markedSpot = '§'; break;
-						default: markedSpot = maze[x][y];
+						default: markedSpot = 'O';
 					}
 					System.out.print(markedSpot);
 				}

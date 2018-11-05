@@ -39,7 +39,9 @@ public class MazeSearchState implements SearchState {
 		for (Point p  : neighbours) {
 			// add corresponding Sucessor state to return list,
 			// if the spot is walkable (ie. not 'x') 
-			if (maze.getSymbol(p) != 'x') {
+			if (maze.getPortals().containsKey(p)) {
+				successors.add(getMazeSearchState(maze.getPortals().get(p), maze));
+			} else if (maze.getSymbol(p) != 'x') {
 				successors.add(getMazeSearchState(p, maze));
 			}
 		}

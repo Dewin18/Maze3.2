@@ -2,6 +2,8 @@ import java.util.List;
 
 /**
  * SearchState Interface
+ * 
+ * An interface to be implemented by all concrete SearchStates
  *
  */
 public interface SearchState {
