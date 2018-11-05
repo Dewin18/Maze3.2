@@ -3,69 +3,75 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
+/**
+ * Main Entry Point of the Application
+ *
+ */
 public class Main {
 
     public static void main(String[] args) {
 
-	//	// read a maze from a .txt file and mapps it into a 2D array of spots
-	//	MazeReader mr = new MazeReader(10, 20, "src/mazes/maze01.txt");
-	//	Spot[][] maze = mr.getMaze();
-	//
-	//	// print the maze on the console
-	//	mr.printMaze();
-	//
-	//	System.out.println();
-	//
-	//	// declare some test indices for the 2D array
-	//	int row = 4;
-	//	int column = 4;
-	//
-	//	// retrieve the spot from the location
-	//	Spot spot = maze[row][column];
-	//
-	//	System.out.println("Spot: " + spot);
-	//	System.out.println("Spot neighbours: " + spot.getNeighbours());
+		// Create the maze from a file
+    	Maze maze = Maze.createMazeFromFile("src/mazes/maze01.txt");
+		// Get first startstate of the maze. We allow multiple startstates. 
+    	MazeSearchState startState = MazeSearchState.getStartStates(maze).get(0);
 		
-		Maze maze = Maze.createMazeFromFile("src/mazes/maze02.txt");
-		maze.print();
-		
-		MazeSearchState startState = MazeSearchState.getStartStates(maze).get(0);
-		// BreadthFirst Demo (original maze takes too long):
-		
-		LinkedList<LinkedList<SearchState>> stack = new LinkedList<LinkedList<SearchState>>();
-		LinkedList<SearchState> initialPath = new LinkedList<SearchState>();
-		initialPath.add(startState);
-		stack.push(initialPath);
-		while (!stack.getFirst().getLast().isGoalState()) {
-			LinkedList<SearchState> currentPath = stack.poll();
-			for (SearchState successor: currentPath.getLast().getSuccessors()) {
-				LinkedList<SearchState> newPath = new LinkedList<SearchState>(currentPath);
-				//some basic pruning
-				boolean cycle = false;
-				for (SearchState state : currentPath) {
-					if (successor.equals(state)) {
-						cycle = true;
-					}
-				}
-				if (!cycle) {
-					newPath.add(successor);
-					stack.add(newPath);
-				}
-				
-			}
-		}
-		for (SearchState state: stack.poll()) {
+    	//print StartState
+    	System.out.println("The start state of the maze:");
+		startState.print();
+		//print all successor of the startstate
+    	System.out.println("All successors of the start state:");
+		for (SearchState state: startState.getSuccessors()) {
 			state.print();
 		}
+		
+		// BreadthFirst Demo:
+//		List<SearchState> addedStates = new LinkedList<SearchState>();
+//		LinkedList<LinkedList<SearchState>> stack = new LinkedList<LinkedList<SearchState>>();
+//		LinkedList<SearchState> initialPath = new LinkedList<SearchState>();
+//		initialPath.add(startState);
+//		stack.push(initialPath);
+//		while (!stack.getFirst().getLast().isGoalState()) {
+//			System.out.println(stack.size() + ", " + stack.getFirst().size());
+//			LinkedList<SearchState> currentPath = stack.poll();
+//			for (SearchState successor: currentPath.getLast().getSuccessors()) {
+//				//some basic pruning - don't add the path if the successor has already been visited
+//				if (addedStates.contains(successor)) {
+//					continue;
+//				}
+//				LinkedList<SearchState> newPath = new LinkedList<SearchState>(currentPath);
+//				//some more basic pruning - don't add the path if it contains a cycle
+//				boolean cycle = false;
+//				for (SearchState state : currentPath) {
+//					if (successor.equals(state)) {
+//						cycle = true;
+//						break;
+//					}
+//				}
+//				if (!cycle) {
+//					newPath.add(successor);
+//					addedStates.add(successor);
+//					stack.add(newPath);
+//				}
+//				
+//			}
+//		}
+//		for (SearchState state: stack.poll()) {
+//			state.print();
+//		}
 	
 		
 		
 		// DepthFirst Demo:
+//		addedStates = new LinkedList<SearchState>();
 //		stack = new LinkedList<LinkedList<SearchState>>();
 //		stack.push(initialPath);
 //		while (!stack.peek().getLast().isGoalState()) {
 //			LinkedList<SearchState> currentPath = stack.pop();
 //			for (SearchState successor: currentPath.getLast().getSuccessors()) {
+//				if (addedStates.contains(successor)) {
+//					continue;
+//				}
 //				LinkedList<SearchState> newPath = new LinkedList<SearchState>(currentPath);
 //				boolean cycle = false;
 //				for (SearchState state : currentPath) {

@@ -22,10 +22,16 @@ public interface SearchState {
 
 	
 	/**
-	 * 
+	 * Prints out the maze to the console
 	 */
 	public void print();
 
-	boolean equals(SearchState state);
+	/**
+	 * tests whether two states are equal
+	 * 
+	 * @param state A SearchState to be compared to the present one
+	 * @return true if equal
+	 */
+	public boolean equals(SearchState state);
 	
 }

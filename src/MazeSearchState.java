@@ -1,4 +1,5 @@
 import java.awt.Point;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,14 +9,23 @@ import java.util.List;
  */
 public class MazeSearchState implements SearchState {
 
+	private static HashMap<Point, MazeSearchState> states;
+	
 	private Point position;
 	private Maze maze;
 	
+	//Initialises the HashMap for the SearchStates. The Map is used to avoid duplicate SearchState generation
+	static {
+		states = new HashMap<Point, MazeSearchState>();
+	}
+	
 	/**
-	 * @param maze
+	 * Basic constructor, kept private to enforce creation with factory method
+	 * 
 	 * @param p
+	 * @param maze
 	 */
-	public MazeSearchState(Maze maze, Point p) {
+	private MazeSearchState(Point p, Maze maze) {
 		this.maze = maze;
 		this.position = p;
 	}
@@ -23,11 +33,14 @@ public class MazeSearchState implements SearchState {
 	@Override
 	public List<SearchState> getSuccessors() {
 		List<SearchState> successors = new LinkedList<SearchState>();
-		//top
+		// get Neighbours of current position
 		List<Point> neighbours = Maze.getNeighbours(position);
+		// iterate over neighbouring points
 		for (Point p  : neighbours) {
+			// add corresponding Sucessor state to return list,
+			// if the spot is walkable (ie. not 'x') 
 			if (maze.getSymbol(p) != 'x') {
-				successors.add(new MazeSearchState(maze, p));
+				successors.add(getMazeSearchState(p, maze));
 			}
 		}
 		return successors;
@@ -35,7 +48,25 @@ public class MazeSearchState implements SearchState {
 
 	@Override
 	public boolean isGoalState() {
+		//Check whether the current position is the goal
 		return maze.getSymbol(position) == 'g';
+	}
+	
+	@Override
+	public void print() {
+		//print out the maze marking the current position
+		maze.print(position);
+	}
+	
+	@Override
+	public boolean equals(SearchState state) {
+		if (!(state instanceof MazeSearchState)) {
+			return false;
+		}
+		// two MazeSearchStates are equal, if they belong to the same maze and have the same position
+		return (position == ((MazeSearchState) state).position) 
+				&& (maze == ((MazeSearchState) state).maze);
+		
 	}
 	
 	/**
@@ -47,24 +78,27 @@ public class MazeSearchState implements SearchState {
 	 */
 	public static List<MazeSearchState> getStartStates(Maze maze) {
 		List<MazeSearchState> startStates = new LinkedList<MazeSearchState>();
+		// Create and add to return list a MazeSearchState for all Starting points of the maze
 		for (Point start: maze.getStartingPoints()) {
-			startStates.add(new MazeSearchState(maze, start));
+			startStates.add(getMazeSearchState(start, maze));
 		}
 		return startStates;
 		
 	}
 	
-	public void print() {
-		maze.print(position);
+	/**
+	 * Factory Method for MazeSearchStates to avoid duplicate generation.
+	 * 
+	 * @param p Point of the desired state
+	 * @param m maze of the desired state
+	 * 
+	 * @return the MazeSearchState representing (p,m) 
+	 */
+	public static MazeSearchState getMazeSearchState(Point p, Maze m) {
+		if (!states.containsKey(p)) {
+			states.put(p, new MazeSearchState(p, m));
+		}
+		return states.get(p);
 	}
 	
-	@Override
-	public boolean equals(SearchState state) {
-		if (!(state instanceof MazeSearchState)) {
-			return false;
-		}
-		return position == ((MazeSearchState) state).position;
-		
-	}
-
 }

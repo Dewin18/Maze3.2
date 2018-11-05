@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Class representing a 2D char-Maze
+ *
+ */
 public class Maze {
 
 	private char[][] maze;
@@ -23,27 +27,37 @@ public class Maze {
 		
 	}
     
+	/**
+	 * Returns all Starting points of the maze
+	 * 
+	 * @return List of StartingPoints
+	 */
 	public List<Point> getStartingPoints() {
 		return startingPoints;
 	}
 
 	/**
-     * create for each char from the maze.txt file a new Spot object and place it
-     * into the 2D array (maze[][]).
+     * maps a String to the given row of the given char-array
      * 
      * @param currentRow index of the current row
-     * @param line a String consisting of the chars of the current row
+     * @param line a String consisting of the chars to map to the current row
+     * @param maze a 2D char Array onto which the Line should be mapped
      * 
-     * @return A List containing the positions  's'
+     * @return A List containing the positions of 's' within the String
      */
     private static List<Integer> mapLineToMazeArray(int currentRow, String line, char[][] maze) {
     	char mazeSymbol;
+    	//prepare List of starting Points
     	List<Integer> startingPoints = new LinkedList<Integer>();
+    	//a loop over each x-postion of the current row of the maze
     	for (int i = 0; i < maze.length; i++) {
-		    mazeSymbol = (i < line.length()) ? line.charAt(i) : 'x';
-		    if (mazeSymbol == 's') {
+		    //if string is too short fill up with 'x's
+    		mazeSymbol = (i < line.length()) ? line.charAt(i) : 'x';
+		    //if symbol is 's' add x-position to Starting points
+    		if (mazeSymbol == 's') {
 		    	startingPoints.add(i);
 		    }
+    		//Fill the current position with the corresponding char of the String 
 		    maze[i][currentRow] = mazeSymbol;
 		}
     	return startingPoints;
@@ -62,22 +76,30 @@ public class Maze {
 		    String line;
 		    int rowCount = 0;
 		    int maxLineLength = 0;
+		    // determine dimensions of the encoded maze
 		    while ((line = bufferedReader.readLine()) != null) {
+		    	//set maxLineLength to be the size of the largest row so far.
 		    	maxLineLength = Math.max(maxLineLength, line.length());
 		    	rowCount++;
 		    }
 		    fileReader = new FileReader(pathToFile);
 		    bufferedReader = new BufferedReader(fileReader);
 		    int row = 0;
+		    //setup new 2D char array with the determined dimensions
 		    char[][] maze = new char[maxLineLength][rowCount];
+		    //prepare List of starting Points
 		    List<Point> startingPoints = new LinkedList<Point>();
+		    //read maze into 2D char array
 		    while ((line = bufferedReader.readLine()) != null) {
+		    	//loop over all returned starting positions 
 		    	for(Integer xPosition: mapLineToMazeArray(row, line, maze)) {
+		    		// add corresponding point to starting point.
 		    		startingPoints.add(new Point(xPosition,row));
 		    	}
 		    	row++;
 		    }
 		    bufferedReader.close();
+		    //return the encoded Maze
 		    return new Maze(maze, rowCount, maxLineLength, startingPoints);
 		} catch (IOException e) {
 		    e.printStackTrace();
@@ -89,15 +111,20 @@ public class Maze {
 	
 	
 	/**
-	 *  Prints out the Maze to the console
+	 *  Prints out the Maze to the console with a Point marked. The style of the mark 
+	 *  depends on the type of the point  
 	 *  
 	 *  @param p a specialPoint to be Marked
 	 */
 	public void print(Point p) {
+		// For all rows, 
 		for(int y = 0; y < maxRows; y++) {
+			// for all columns
 			for(int x = 0; x < maxColumns; x++) {
+				//print out current field of the maze if it is not the special point
 				if (p == null || !p.equals(new Point(x,y))) {
 					System.out.print(maze[x][y]);
+				// else print a suitable mark on the spot.
 				} else {
 					char markedSpot;
 					switch(maze[x][y]) {
@@ -130,13 +157,21 @@ public class Maze {
 	 * @return the char at x,y or 'x' if bound are exceeded;
 	 */
 	public char getSymbol(Point p) {
+		// check whether point is inside dimensions and return corresponding element of the 2D char array
 		if (p.x >= 0 && p.x < this.maxColumns && p.y >= 0 && p.y < this.maxRows) {
 			return this.maze[p.x][p.y];
+		// return x if this is not the case
 		} else {
 			return 'x';
 		}
 	}
 
+	
+	/**
+	 * Helper Mathod to generate a list of all neighbouring points.
+	 * @param position Point for which the neighbours should be generated 
+	 * @return List of neighbouring Points
+	 */
 	public static List<Point> getNeighbours(Point position) {
 		List<Point> neighbours = new LinkedList<Point>();
 		neighbours.add(new Point(position.x + 1, position.y));
