@@ -1,6 +1,7 @@
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Scanner;
 import java.util.Stack;
 
 /**
@@ -29,7 +30,8 @@ public class Main {
     	BreadthFirstSearch bfs = new BreadthFirstSearch();
     	bfs.setStartState(startState);
     	while (bfs.getFrontierSize() > 0) {
-    		bfs.search(false, false, true, true);
+    		bfs.search(true, false, true, true);
+    		System.out.println((new Scanner(System.in)).nextLine());
     	}
     	
 //    	LinkedList<SearchState> addedStates = new LinkedList<SearchState>();
