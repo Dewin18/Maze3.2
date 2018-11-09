@@ -42,4 +42,10 @@ public class BreadthFirstSearch extends BasicSearch {
 		
 	}
 
+	@Override
+	public void clearFrontier() {
+		queue.clear();
+		
+	}
+
 }

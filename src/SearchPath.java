@@ -16,8 +16,7 @@ public class SearchPath {
 		return searchStates.getLast();
 	}
 
-	public SearchPath add(SearchState successor) {
-		// TODO Auto-generated method stub
+	public SearchPath extend(SearchState successor) {
 		LinkedList<SearchState> extendedList = new LinkedList<SearchState>(searchStates);
 		extendedList.add(successor);
 		return new SearchPath(extendedList);

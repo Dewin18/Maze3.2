@@ -44,4 +44,9 @@ public class BasicHeuristicSearch extends BasicSearch {
 		return queue.peek();
 	}
 
+	@Override
+	public void clearFrontier() {
+		queue.clear();		
+	}
+
 }
