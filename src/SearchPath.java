@@ -16,8 +16,7 @@ public class SearchPath {
 		return searchStates.getLast();
 	}
 
-	public SearchPath add(SearchState successor) {
-		// TODO Auto-generated method stub
+	public SearchPath extend(SearchState successor) {
 		LinkedList<SearchState> extendedList = new LinkedList<SearchState>(searchStates);
 		extendedList.add(successor);
 		return new SearchPath(extendedList);
@@ -28,9 +27,20 @@ public class SearchPath {
 	}
 
 	public void print() {
-		for (SearchState state: searchStates) {
-			state.print();
+		SearchState first = searchStates.getFirst();
+		if (first.hasDrawablePath()) {
+			first.printPath(searchStates);
+		} else {
+			for (SearchState state: searchStates) {
+				state.print();
+			}			
 		}
 	}
+
+	public LinkedList<SearchState> getStates() {
+		return searchStates;
+	}
+	
+
 
 }

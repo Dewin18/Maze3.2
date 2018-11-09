@@ -21,6 +21,10 @@ public class Maze {
 	private int maxColumns;
 	
     private HashMap<Point, Point> portals;
+
+	private List<Point> goalPoints;
+
+	private int maxManhattenDistance;
 	
 	private Maze(char[][] maze, int rows, int columns) {
 		this.maze = maze;
@@ -28,7 +32,8 @@ public class Maze {
 		this.maxRows = rows;
 		this.startingPoints = new LinkedList<Point>();
 		this.portals = new HashMap<Point,Point>();
-		
+		this.setGoalPoints(new LinkedList<Point>());
+		this.maxManhattenDistance = maxColumns*maxRows;
 		
 	}
     
@@ -43,6 +48,14 @@ public class Maze {
 
 	public HashMap<Point, Point> getPortals() {
 		return portals;
+	}
+
+	public int getMaxRows() {
+		return maxRows;
+	}
+
+	public int getMaxColumns() {
+		return maxColumns;
 	}
 
 	/**
@@ -63,6 +76,9 @@ public class Maze {
     		if (mazeSymbol == 's') {
     			maze.startingPoints.add(new Point(i,currentRow));
 		    }
+    		if (mazeSymbol == 'g') {
+    			maze.getGoalPoints().add(new Point(i,currentRow));
+		    }    		
     		if (Character.isDigit(mazeSymbol)) {
     			int digit = Character.getNumericValue(mazeSymbol);
     			boolean containsDigit = portalPoints.containsKey(digit);
@@ -140,13 +156,13 @@ public class Maze {
 	 *  
 	 *  @param p a specialPoint to be Marked
 	 */
-	public void print(Point p) {
+	public void print(List<Point> list) {
 		// For all rows, 
 		for(int y = 0; y < maxRows; y++) {
 			// for all columns
 			for(int x = 0; x < maxColumns; x++) {
 				//print out current field of the maze if it is not the special point
-				if (p == null || !p.equals(new Point(x,y))) {
+				if (list == null || !list.contains(new Point(x,y))) {
 					System.out.print(maze[x][y]);
 				// else print a suitable mark on the spot.
 				} else {
@@ -169,8 +185,22 @@ public class Maze {
 	 *  Prints out the Maze to the console
 	 */
 	public void print() {
-		print(null);
+		print(new LinkedList<Point>());
 	}	
+	
+	public void print(Point p) {
+		LinkedList<Point> list = new LinkedList<Point>();
+		list.add(p);
+		print(list);
+	}
+	
+	public void printPath(List<SearchState> path) {
+		LinkedList<Point> list = new LinkedList<Point>();
+		for (SearchState state: path) {
+			list.add(((MazeSearchState) state).getPosition());
+		}
+		print(list);
+	}
 	
 	/**
 	 * Returns the symbol at x,y  or 'x' if bound are exceeded;
@@ -203,6 +233,18 @@ public class Maze {
 		neighbours.add(new Point(position.x, position.y + 1));
 		neighbours.add(new Point(position.x, position.y - 1));
 		return neighbours;
+	}
+
+	public List<Point> getGoalPoints() {
+		return goalPoints;
+	}
+
+	public void setGoalPoints(List<Point> goalPoints) {
+		this.goalPoints = goalPoints;
+	}
+
+	public int getMaxManhattenDistance() {
+		return maxManhattenDistance;
 	}
 	
 }

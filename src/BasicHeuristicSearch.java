@@ -1,14 +1,23 @@
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
-public class BreadthFirstSearch extends BasicSearch {
+public class BasicHeuristicSearch extends BasicSearch {
 
-	private LinkedList<SearchPath> queue;
+	private PriorityQueue<SearchPath> queue;
 	
-	
-	public BreadthFirstSearch() {
-		queue = new LinkedList<SearchPath>();
+	public BasicHeuristicSearch (Comparator<SearchPath> comp) {
+		queue =  new PriorityQueue<SearchPath>(comp);
 	}
 	
+	@Override
+	public void reset() {
+		super.reset();
+		queue.clear();
+
+	}
+
 	@Override
 	public void addToFrontier(SearchPath newPath) {
 		queue.add(newPath);
@@ -32,20 +41,12 @@ public class BreadthFirstSearch extends BasicSearch {
 
 	@Override
 	public SearchPath getNextPath() {
-		return queue.poll();
-	}
-
-	@Override
-	public void reset() {
-		super.reset();
-		queue.clear();
-		
+		return queue.peek();
 	}
 
 	@Override
 	public void clearFrontier() {
-		queue.clear();
-		
+		queue.clear();		
 	}
 
 }

@@ -9,14 +9,19 @@ import java.util.List;
  */
 public class MazeSearchState implements SearchState {
 
+	public final static int NONE = 0;
+	public final static int MANHATTEN_DISTANCE = 1;
+	
 	private static HashMap<Point, MazeSearchState> states;
 	
 	private Point position;
 	private Maze maze;
+	private static int heuristicType;
 	
 	//Initialises the HashMap for the SearchStates. The Map is used to avoid duplicate SearchState generation
 	static {
 		states = new HashMap<Point, MazeSearchState>();
+		heuristicType = NONE;
 	}
 	
 	/**
@@ -61,7 +66,7 @@ public class MazeSearchState implements SearchState {
 	}
 	
 	@Override
-	public boolean equals(SearchState state) {
+	public boolean equals(Object state) {
 		if (!(state instanceof MazeSearchState)) {
 			return false;
 		}
@@ -69,6 +74,11 @@ public class MazeSearchState implements SearchState {
 		return (position == ((MazeSearchState) state).position) 
 				&& (maze == ((MazeSearchState) state).maze);
 		
+	}
+	
+	@Override
+	public int hashCode() {
+		return position.hashCode();
 	}
 	
 	/**
@@ -102,5 +112,43 @@ public class MazeSearchState implements SearchState {
 		}
 		return states.get(p);
 	}
+
+	public static void setHeuristic(int type) {
+		heuristicType = type;
+	}
 	
+	@Override
+	public int calcHeuristic() {
+		switch (MazeSearchState.heuristicType) {
+			case NONE: return 0;
+			case MANHATTEN_DISTANCE: return getManhattenDistance();
+				
+		}
+		
+		return 0;
+	}
+
+	private int getManhattenDistance() {
+		int minDistance = maze.getMaxManhattenDistance();
+		int distance;
+		for (Point goal :maze.getGoalPoints()) {
+			distance = Math.abs(goal.x-position.x)+Math.abs(goal.y-position.y);
+			minDistance = Math.min(distance,minDistance);
+		}
+		return minDistance;
+	}
+
+	@Override
+	public Point getPosition() {
+		return this.position;
+	}
+
+	@Override
+	public boolean hasDrawablePath() {
+		return true;
+	}
+	
+	public void printPath(List<SearchState> path) {
+		maze.printPath(path);
+	}
 }

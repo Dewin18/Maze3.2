@@ -6,14 +6,14 @@ public abstract class BasicSearch {
 	
 	private HashSet<SearchState> visitedStates;
 	private LinkedList<SearchPath> solutions;
-	private List<SearchState> successors;
 	private SearchPath currentPath;
+	private int pathsAdded;
 	
 	public BasicSearch() {
 		visitedStates = new HashSet<SearchState>();
 		solutions = new  LinkedList<SearchPath>();
-		successors = new  LinkedList<SearchState>();
-		currentPath = new SearchPath(new LinkedList());
+		currentPath = new SearchPath(new LinkedList<SearchState>());
+		pathsAdded = 0;
 	}
 	
 	public void search(boolean stopAfterFirstSolution, boolean multiplePathPruning, boolean cycleDetection, boolean verbose) {
@@ -21,48 +21,46 @@ public abstract class BasicSearch {
 			if (verbose) {
 				System.out.println("Frontier-size:" + getFrontierSize() + ", currentPath-cost:" + currentPath.cost());
 			}
-			boolean solutionFound = doSearchStep( multiplePathPruning, cycleDetection, verbose);
-			if (stopAfterFirstSolution && solutionFound) {
-				break;
-			}
+			currentPath = removeNextPath();
+			if (currentPath.getLast().isGoalState()) {
+				this.solutions.add(currentPath);
+				visitedStates.clear();
+				if (verbose) {
+					currentPath.print();
+				}
+				if (stopAfterFirstSolution) {
+					break;
+				}
+				
+			}	
+			expandCurrentPath(multiplePathPruning, cycleDetection);
+			
 		}
 		if (verbose) {
-			System.out.println(solutions.size() + " solutions found");
+			System.out.println(solutions.size() + " solutions found, " + pathsAdded + " paths added.");
 		}	
 	}
 
-	private boolean doSearchStep(boolean multiplePathPruning, boolean cycleDetection,
-			boolean verbose) {
+	private void expandCurrentPath(boolean multiplePathPruning, boolean cycleDetection) {
 
-		if (successors.isEmpty()) {
-			currentPath = removeNextPath();
-			successors = currentPath.getLast().getSuccessors();
-		}		
-		SearchState successor;
-		while (!successors.isEmpty() && (successor = successors.remove(0)) != null) {
-			
-			//some basic pruning - don't add the path if the successor has already been visited
-			if (multiplePathPruning && visitedStates.contains(successor)) {
-				continue;
-			}
-			visitedStates.add(successor);
+		List<SearchState> successors = currentPath.getLast().getSuccessors();
+				
+		for (SearchState successor : successors) {
 			//some more basic pruning - don't add the path if it contains a cycle
 			if (cycleDetection && currentPath.contains(successor)) {
 				continue;
+			}			
+			//some basic pruning - don't add the path if the successor has already been visited
+			if (multiplePathPruning) {
+				if (visitedStates.contains(successor)) {
+					continue;
+				} 
+				visitedStates.add(successor);	
 			}
-			
-			SearchPath newPath = currentPath.add(successor);
-			if (successor.isGoalState()) {
-				this.solutions.add(newPath);
-				if (verbose) {
-					newPath.print();
-				}
-				return true;
-			}	
+			SearchPath newPath = currentPath.extend(successor);
 			addToFrontier(newPath);
-			
+			pathsAdded++;	
 		}
-		return false;
 	}
 
 	public void setStartState(SearchState state) {
@@ -72,8 +70,17 @@ public abstract class BasicSearch {
 		addToFrontier(new SearchPath(states));
 	}
 	
-	abstract public void reset();
 
+	public void reset() {
+		this.visitedStates.clear();
+		this.solutions.clear();
+		this.currentPath = new SearchPath(new LinkedList<SearchState>());
+		pathsAdded = 0;
+		clearFrontier();
+	};
+
+	abstract public void clearFrontier();
+	
 	abstract public void addToFrontier(SearchPath newPath);
 
 	abstract public SearchPath removeNextPath();
