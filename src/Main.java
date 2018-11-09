@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
 
 		// Create the maze from a file
-    	Maze maze = Maze.createMazeFromFile("src/mazes/maze01.txt");
+    	Maze maze = Maze.createMazeFromFile("src/mazes/mazelarge01.txt");
 		// Get first startstate of the maze. We allow multiple startstates. 
     	MazeSearchState startState = MazeSearchState.getStartStates(maze).get(0);
 		
@@ -27,13 +27,31 @@ public class Main {
 //		}
 		
 		// BreadthFirst Demo:
-    	BreadthFirstSearch bfs = new BreadthFirstSearch();
-    	bfs.setStartState(startState);
-    	while (bfs.getFrontierSize() > 0) {
-    		bfs.search(true, false, true, true);
-    		System.out.println((new Scanner(System.in)).nextLine());
-    	}
+//    	BreadthFirstSearch bfs = new BreadthFirstSearch();
+//    	bfs.setStartState(startState);
+//    	stepByStep: while (bfs.getFrontierSize() > 0) {
+//    		bfs.search(true, false, true, true);
+//    		Scanner scanner = new Scanner(System.in);
+//    		System.out.println("Enter 'q' to terminate search");
+//    		System.out.print("§>");
+//    		switch(scanner.nextLine()){
+//    			case "q" : break stepByStep;
+//    		}
+//    	}
     	
+    	//A* Demo
+    	MazeSearchState.setHeuristic(MazeSearchState.MANHATTEN_DISTANCE);
+    	BasicHeuristicSearch aStarSearch = new BasicHeuristicSearch(new AStarComparator()); 
+    	aStarSearch.setStartState(startState);
+    	stepByStep: while (aStarSearch.getFrontierSize() > 0) {
+    		aStarSearch.search(true, true, true, true);
+    		Scanner scanner = new Scanner(System.in);
+    		System.out.println("Enter 'q' to terminate search");
+    		System.out.print("§>");
+    		switch(scanner.nextLine()){
+    			case "q" : break stepByStep;
+    		}
+    	}    	
 //    	LinkedList<SearchState> addedStates = new LinkedList<SearchState>();
 //		LinkedList<LinkedList<SearchState>> stack = new LinkedList<LinkedList<SearchState>>();
 //		LinkedList<SearchState> initialPath = new LinkedList<SearchState>();
@@ -57,7 +75,8 @@ public class Main {
 //					}
 //				}
 //				if (!cycle) {
-//					newPath.add(successor);
+
+    	//					newPath.add(successor);
 //					addedStates.add(successor);
 //					stack.add(newPath);
 //				}

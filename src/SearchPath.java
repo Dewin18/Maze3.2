@@ -28,9 +28,20 @@ public class SearchPath {
 	}
 
 	public void print() {
-		for (SearchState state: searchStates) {
-			state.print();
+		SearchState first = searchStates.getFirst();
+		if (first.hasDrawablePath()) {
+			first.printPath(searchStates);
+		} else {
+			for (SearchState state: searchStates) {
+				state.print();
+			}			
 		}
 	}
+
+	public LinkedList<SearchState> getStates() {
+		return searchStates;
+	}
+	
+
 
 }

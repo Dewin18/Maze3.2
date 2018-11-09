@@ -1,3 +1,5 @@
+import java.awt.Point;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,6 +26,13 @@ public interface SearchState {
 
 	
 	/**
+	 * Determines the heuristic value for this searchState
+	 * 
+	 * @return an int representing the heuristic value
+	 */
+	public int calcHeuristic();
+	
+	/**
 	 * Prints out the maze to the console
 	 */
 	public void print();
@@ -31,9 +40,25 @@ public interface SearchState {
 	/**
 	 * tests whether two states are equal
 	 * 
-	 * @param state A SearchState to be compared to the present one
+	 * @param state an Object to be compared to this seachState
 	 * @return true if equal
+	 * 
+	 * should be overridden
 	 */
-	public boolean equals(SearchState state);
+	 @Override 
+	 public boolean equals(Object state);
+	 
+	 /**
+	  * Override HashCode
+	  */
+	 @Override
+	 public int hashCode();
+
+	public Point getPosition();
+
+	public boolean hasDrawablePath();
+
+	public void printPath(List<SearchState> searchStates);
+	
 	
 }
