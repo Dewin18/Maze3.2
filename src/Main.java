@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
 
 		// Create the maze from a file
-    	Maze maze = Maze.createMazeFromFile("src/mazes/mazelarge01.txt");
+    	Maze maze = Maze.createMazeFromFile("src/mazes/maze03.txt");
 		// Get first startstate of the maze. We allow multiple startstates. 
     	MazeSearchState startState = MazeSearchState.getStartStates(maze).get(0);
 		
@@ -39,7 +39,19 @@ public class Main {
 //    		}
 //    	}
     	
+    	BreadthFirstSearch dfs = new BreadthFirstSearch();
+    	dfs.setStartState(startState);stepByStep: while (dfs.getFrontierSize() > 0) {
+    		dfs.search(true, false, true, true);
+    		Scanner scanner = new Scanner(System.in);
+    		System.out.println("Enter 'q' to terminate search");
+    		System.out.print("§>");
+    		switch(scanner.nextLine()){
+    			case "q" : break stepByStep;
+    		}
+    	}
+    	
     	//A* Demo
+    	/*
     	MazeSearchState.setHeuristic(MazeSearchState.MANHATTEN_DISTANCE);
     	BasicHeuristicSearch aStarSearch = new BasicHeuristicSearch(new AStarComparator()); 
     	aStarSearch.setStartState(startState);
@@ -51,7 +63,8 @@ public class Main {
     		switch(scanner.nextLine()){
     			case "q" : break stepByStep;
     		}
-    	}    	
+    	}    
+    	*/	
 //    	LinkedList<SearchState> addedStates = new LinkedList<SearchState>();
 //		LinkedList<LinkedList<SearchState>> stack = new LinkedList<LinkedList<SearchState>>();
 //		LinkedList<SearchState> initialPath = new LinkedList<SearchState>();

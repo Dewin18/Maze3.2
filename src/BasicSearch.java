@@ -4,10 +4,10 @@ import java.util.List;
 
 public abstract class BasicSearch {
 	
-	private HashSet<SearchState> visitedStates;
+	protected HashSet<SearchState> visitedStates;
 	private LinkedList<SearchPath> solutions;
-	private SearchPath currentPath;
-	private int pathsAdded;
+	protected SearchPath currentPath;
+	protected int pathsAdded;
 	
 	public BasicSearch() {
 		visitedStates = new HashSet<SearchState>();
@@ -41,7 +41,7 @@ public abstract class BasicSearch {
 		}	
 	}
 
-	private void expandCurrentPath(boolean multiplePathPruning, boolean cycleDetection) {
+	public void expandCurrentPath(boolean multiplePathPruning, boolean cycleDetection) {
 
 		List<SearchState> successors = currentPath.getLast().getSuccessors();
 				

@@ -1,10 +1,15 @@
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.List;
 
 public class DepthFirstSearch extends BasicSearch {
 
-	Deque<SearchPath> stack = new ArrayDeque<SearchPath>();
+	private Deque<SearchPath> stack;
+
+	public DepthFirstSearch() {
+		stack = new LinkedList<SearchPath>();
+	}
 
 	@Override
 	public void addToFrontier(SearchPath newPath) {
@@ -34,43 +39,46 @@ public class DepthFirstSearch extends BasicSearch {
 
 	@Override
 	public void reset() {
+		super.reset();
 		stack.clear();
 
 	}
 
 	@Override
-	private boolean doSearchStep(boolean multiplePathPruning, boolean cycleDetection, boolean verbose) {
-		Deque statesToVisit = new ArrayDeque();
-		//The changes to the normal doSearchStep function are that we dont have a path for each succesor but continue on our current path with the first successor
-		
-		
-		//we save all the States that we "saw" but didnt visit here
-		statesToVisit = removeNextPath();
-		//while there are still states we have yet to visit we need to continue
-		while (!statesToVisit.isEmpty()) {
-			
-			//if we already used the current successors we need new ones
-			if (successors.isEmpty()) {
-				successors = statesToVisit.poll().getSuccessors();
-				//we continue on our path with the first element of the states we still need to visit
-				currentPath = currentPath.add(statesToVisit.getFirst());
-			}
-			//as long as we havent reached the goal and we still have successors we save the successors 
-			if (!currentPath.getLast.isGoalState() && !successors.isEmpty) {
-				statesToVisit.add(successors);
-				successors.clear();
-			}
-			//if we reached the goal we are happy and tell the solution
-			if (currentPath.getLast.isGoalState()) {
-				this.solutions.add(currentPath);
-				if (verbose) {
-					currentPath.print();
-				}
-				return true;
-			}
-		}
-		return false;
+	public void clearFrontier() {
+		stack.clear();
 
+	}
+
+	@Override
+	public void expandCurrentPath(boolean multiplePathPruning, boolean cycleDetection) {
+
+		Deque<SearchState> successors = new ArrayDeque<SearchState>();
+		while (!currentPath.getLast().isGoalState()) {
+			successors.addAll(currentPath.getLast().getSuccessors());
+
+			for (SearchState successor : successors) {
+				// some more basic pruning - don't add the path if it contains a
+				// cycle
+				if (cycleDetection && currentPath.contains(successor)) {
+					continue;
+				}
+				// some basic pruning - don't add the path if the successor has
+				// already been visited
+				if (multiplePathPruning) {
+					if (visitedStates.contains(successor)) {
+						continue;
+					}
+					visitedStates.add(successor);
+				}
+
+			}
+
+			currentPath = currentPath.extend(successors.pop());
+			SearchPath newPath = currentPath;
+			pathsAdded++;
+			addToFrontier(newPath);
+		}
 	}
 
 }
