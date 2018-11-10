@@ -1,8 +1,4 @@
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
 import java.util.Scanner;
-import java.util.Stack;
 
 /**
  * Main Entry Point of the Application
@@ -10,6 +6,9 @@ import java.util.Stack;
  */
 public class Main {
 
+    /**
+     * @param args
+     */
     public static void main(String[] args) {
 
 		// Create the maze from a file
@@ -26,7 +25,7 @@ public class Main {
 		// BreadthFirst Demo:
     	BreadthFirstSearch bfs = new BreadthFirstSearch();
     	bfs.setStartState(startState);
-    	stepByStep: while (bfs.getFrontierSize() > 0) {
+    	stepByStep: while (!bfs.isFrontierEmpty()) {
     		bfs.search(true, false, true, true);
     		System.out.println("Enter 'q' to terminate BreadthFirstSearch and start DepthFirstSearch");
     		System.out.println("Press Enter to continue BFS.");
@@ -39,7 +38,7 @@ public class Main {
     	// DepthFirst Demo:
     	DepthFirstSearch dfs = new DepthFirstSearch();
     	dfs.setStartState(startState);
-    	stepByStep: while (dfs.getFrontierSize() > 0) {
+    	stepByStep: while (!dfs.isFrontierEmpty()) {
     		dfs.search(true, false, true, true);
     		System.out.println("Enter 'q' to terminate SearchDemo");
     		System.out.print("§>");

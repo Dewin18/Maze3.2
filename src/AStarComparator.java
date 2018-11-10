@@ -1,5 +1,9 @@
 import java.util.Comparator;
 
+/**
+ * @TODO
+ *
+ */
 public class AStarComparator implements Comparator<SearchPath> {
 
 	@Override

@@ -1,5 +1,3 @@
-import java.awt.Point;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -54,10 +52,17 @@ public interface SearchState {
 	 @Override
 	 public int hashCode();
 
-	public Point getPosition();
 
+	/**
+	 * @TODO Comment
+	 * 
+	 * @return
+	 */
 	public boolean hasDrawablePath();
 
+	/**
+	 * @param searchStates
+	 */
 	public void printPath(List<SearchState> searchStates);
 	
 	

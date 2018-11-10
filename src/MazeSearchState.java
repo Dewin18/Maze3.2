@@ -9,7 +9,13 @@ import java.util.List;
  */
 public class MazeSearchState implements SearchState {
 
+	/**
+	 * @TODO
+	 */
 	public final static int NONE = 0;
+	/**
+	 * @TODO
+	 */
 	public final static int MANHATTEN_DISTANCE = 1;
 	
 	private static HashMap<Point, MazeSearchState> states;
@@ -42,11 +48,14 @@ public class MazeSearchState implements SearchState {
 		List<Point> neighbours = Maze.getNeighbours(position);
 		// iterate over neighbouring points
 		for (Point p  : neighbours) {
-			// add corresponding Sucessor state to return list,
-			// if the spot is walkable (ie. not 'x') 
 			if (maze.getPortals().containsKey(p)) {
-				successors.add(getMazeSearchState(maze.getPortals().get(p), maze));
+				// if the spot is a portal, 
+				// add the portal destination to return list,
+				SearchState otherPortal = getMazeSearchState(maze.getPortals().get(p), maze);
+				successors.add(otherPortal);
 			} else if (maze.getSymbol(p) != 'x') {
+				// add corresponding Sucessor state to return list,
+				// if the spot is walkable (ie. not 'x') 
 				successors.add(getMazeSearchState(p, maze));
 			}
 		}
@@ -71,8 +80,8 @@ public class MazeSearchState implements SearchState {
 			return false;
 		}
 		// two MazeSearchStates are equal, if they belong to the same maze and have the same position
-		return (position == ((MazeSearchState) state).position) 
-				&& (maze == ((MazeSearchState) state).maze);
+		return (maze == ((MazeSearchState) state).maze)
+				&& (position == ((MazeSearchState) state).position);
 		
 	}
 	
@@ -113,6 +122,9 @@ public class MazeSearchState implements SearchState {
 		return states.get(p);
 	}
 
+	/**
+	 * @param type
+	 */
 	public static void setHeuristic(int type) {
 		heuristicType = type;
 	}
@@ -139,16 +151,17 @@ public class MazeSearchState implements SearchState {
 	}
 
 	@Override
-	public Point getPosition() {
-		return this.position;
-	}
-
-	@Override
 	public boolean hasDrawablePath() {
 		return true;
 	}
 	
+	@Override
 	public void printPath(List<SearchState> path) {
-		maze.printPath(path);
+		LinkedList<Point> list = new LinkedList<Point>();
+		for (SearchState state: path) {
+			list.add(((MazeSearchState) state).position);
+		}	
+		
+		maze.print(list);
 	}
 }

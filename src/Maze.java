@@ -46,14 +46,27 @@ public class Maze {
 		return startingPoints;
 	}
 
+	/**
+	 * 
+	 * @TODO
+	 * @return
+	 */
 	public HashMap<Point, Point> getPortals() {
 		return portals;
 	}
 
+	/**
+	 * @TODO
+	 * @return
+	 */
 	public int getMaxRows() {
 		return maxRows;
 	}
 
+	/**
+	 * @TODO
+	 * @return
+	 */
 	public int getMaxColumns() {
 		return maxColumns;
 	}
@@ -64,6 +77,7 @@ public class Maze {
      * @param currentRow index of the current row
      * @param line a String consisting of the chars to map to the current row
      * @param maze a 2D char Array onto which the Line should be mapped
+     * @param portalPoints A temporary map from Digit to Point containing all portals found so far.
 	 * @throws Exception 
      */
     private static void mapLineToMazeArray(int currentRow, String line, Maze maze, HashMap<Integer,Point> portalPoints) throws Exception {
@@ -76,16 +90,23 @@ public class Maze {
     		if (mazeSymbol == 's') {
     			maze.startingPoints.add(new Point(i,currentRow));
 		    }
+    		//if symbol is 'g' add x-position to Starting points
     		if (mazeSymbol == 'g') {
     			maze.getGoalPoints().add(new Point(i,currentRow));
-		    }    		
+		    }
+    		//if symbol is a digit, ie.e a portal, check if a pair is found.
     		if (Character.isDigit(mazeSymbol)) {
     			int digit = Character.getNumericValue(mazeSymbol);
+    			//check whether ths digit has been encountered before
     			boolean containsDigit = portalPoints.containsKey(digit);
-    			Point p = portalPoints.put(digit, new Point(i,currentRow));
-    			if (p != null) {
-    				maze.portals.put(new Point(i,currentRow), p);
-    			    maze.portals.put(p, new Point(i,currentRow));
+    			// insert current Point into temporary Map digit -> point
+    			// and get previous value for that digit.
+    			Point lastValue = portalPoints.put(digit, new Point(i,currentRow));
+    			//if there was a previous value we have found a new portal pair
+    			if (lastValue != null) {
+    				// add both ordered pairs of the two portal ends to final portal Map
+    				maze.portals.put(new Point(i,currentRow), lastValue);
+    			    maze.portals.put(lastValue, new Point(i,currentRow));
     			    portalPoints.put(digit, null);
     			} else if (containsDigit){
     				throw new Exception("Portal mapping ambigous");
@@ -119,20 +140,20 @@ public class Maze {
 		    }
 		    fileReader = new FileReader(pathToFile);
 		    bufferedReader = new BufferedReader(fileReader);
-		    int row = 0;
+
 		    
 		    //setup new Maze with the determined dimensions
 		    Maze maze = new Maze(new char[maxLineLength][rowCount], rowCount, maxLineLength);
 		    
-		    //Setup Map for Portal Points
+		    //Setup temporary Map for Portal Points
 		    HashMap<Integer, Point> portalPoints = new HashMap<Integer, Point>();
 		    
+		    
 		    //read maze into 2D char array		
+		    int row = 0;
 		    while ((line = bufferedReader.readLine()) != null) {
-		    	//loop over all returned starting positions 
-		    	
+		    	//map each line passing along the temporary portal map		    	
 				mapLineToMazeArray(row, line, maze, portalPoints);
-
 		    	row++;
 		    }
 		    bufferedReader.close();
@@ -154,14 +175,14 @@ public class Maze {
 	 *  Prints out the Maze to the console with a Point marked. The style of the mark 
 	 *  depends on the type of the point  
 	 *  
-	 *  @param p a specialPoint to be Marked
+	 *  @param list a List of specialPoints to be Marked
 	 */
 	public void print(List<Point> list) {
 		// For all rows, 
 		for(int y = 0; y < maxRows; y++) {
 			// for all columns
 			for(int x = 0; x < maxColumns; x++) {
-				//print out current field of the maze if it is not the special point
+				//print out current field of the maze if it is not a special point
 				if (list == null || !list.contains(new Point(x,y))) {
 					System.out.print(maze[x][y]);
 				// else print a suitable mark on the spot.
@@ -174,8 +195,7 @@ public class Maze {
 						default: markedSpot = 'O';
 					}
 					System.out.print(markedSpot);
-				}
-					
+				}		
 			}	
 			System.out.println();
 		}
@@ -194,17 +214,6 @@ public class Maze {
 	public void print(Point p) {
 		LinkedList<Point> list = new LinkedList<Point>();
 		list.add(p);
-		print(list);
-	}
-	
-	/**
-	 * @param path
-	 */
-	public void printPath(List<SearchState> path) {
-		LinkedList<Point> list = new LinkedList<Point>();
-		for (SearchState state: path) {
-			list.add(((MazeSearchState) state).getPosition());
-		}
 		print(list);
 	}
 	

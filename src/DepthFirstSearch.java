@@ -1,12 +1,17 @@
-import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.LinkedList;
-import java.util.List;
 
+/**
+ * @TODO
+ *
+ */
 public class DepthFirstSearch extends BasicSearch {
 
 	private Deque<SearchPath> stack;
 
+	/**
+	 * @TODO
+	 */
 	public DepthFirstSearch() {
 		stack = new LinkedList<SearchPath>();
 	}
@@ -34,15 +39,9 @@ public class DepthFirstSearch extends BasicSearch {
 
 	@Override
 	public SearchPath getNextPath() {
-		return stack.poll();
+		return stack.peek();
 	}
 
-	@Override
-	public void reset() {
-		super.reset();
-		stack.clear();
-
-	}
 
 	@Override
 	public void clearFrontier() {

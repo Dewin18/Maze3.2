@@ -1,10 +1,17 @@
 import java.util.LinkedList;
 
+/**
+ * @TODO
+ *
+ */
 public class BreadthFirstSearch extends BasicSearch {
 
 	private LinkedList<SearchPath> queue;
 	
 	
+	/**
+	 * @TODO
+	 */
 	public BreadthFirstSearch() {
 		queue = new LinkedList<SearchPath>();
 	}
