@@ -188,12 +188,18 @@ public class Maze {
 		print(new LinkedList<Point>());
 	}	
 	
+	/**
+	 * @param p
+	 */
 	public void print(Point p) {
 		LinkedList<Point> list = new LinkedList<Point>();
 		list.add(p);
 		print(list);
 	}
 	
+	/**
+	 * @param path
+	 */
 	public void printPath(List<SearchState> path) {
 		LinkedList<Point> list = new LinkedList<Point>();
 		for (SearchState state: path) {
@@ -235,14 +241,23 @@ public class Maze {
 		return neighbours;
 	}
 
+	/**
+	 * @return
+	 */
 	public List<Point> getGoalPoints() {
 		return goalPoints;
 	}
 
+	/**
+	 * @param goalPoints
+	 */
 	public void setGoalPoints(List<Point> goalPoints) {
 		this.goalPoints = goalPoints;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getMaxManhattenDistance() {
 		return maxManhattenDistance;
 	}
