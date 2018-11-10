@@ -170,7 +170,7 @@ public class Maze {
 					switch(maze[x][y]) {
 						case ' ' : markedSpot = '|'; break;
 						case 's' : markedSpot = '$'; break;
-						case 'g' : markedSpot = 'ง'; break;
+						case 'g' : markedSpot = 'ยง'; break;
 						default: markedSpot = 'O';
 					}
 					System.out.print(markedSpot);
