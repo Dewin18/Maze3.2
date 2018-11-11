@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
 
 		// Create the maze from a file
-    	Maze maze = Maze.createMazeFromFile("src/mazes/maze03.txt");
+    	Maze maze = Maze.createMazeFromFile("src/mazes/maze05.txt");
 		// Get first startstate of the maze. We allow multiple startstates. 
     	MazeSearchState startState = MazeSearchState.getStartStates(maze).get(0);
     	Scanner scanner = new Scanner(System.in);
