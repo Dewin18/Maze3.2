@@ -1,8 +1,9 @@
 import java.util.LinkedList;
 
 /**
- * @TODO 
- * Here we Implement the Breadth first Search by using the Basic Search and further implementing the abstract functions
+ * Here we implement the Breadth first Search 
+ * by using the Basic Search and 
+ * implementing the frontier by a LIFO-Queue
  */
 public class BreadthFirstSearch extends BasicSearch {
 
@@ -10,8 +11,9 @@ public class BreadthFirstSearch extends BasicSearch {
 	
 	
 	/**
-	 * @TODO
-	 * Initiating the queue 
+	 * Constructor 
+	 * 
+	 * Initiates the queue 
 	 */
 	public BreadthFirstSearch() {
 		queue = new LinkedList<SearchPath>();
@@ -41,13 +43,6 @@ public class BreadthFirstSearch extends BasicSearch {
 	@Override
 	public SearchPath getNextPath() {
 		return queue.peek();
-	}
-
-	@Override
-	public void reset() {
-		super.reset();
-		queue.clear();
-		
 	}
 
 	@Override

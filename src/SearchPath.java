@@ -1,7 +1,7 @@
 import java.util.LinkedList;
 
 /**
- * @TODO Comment
+ * A Class representing a SearchPAth. Modelled by a list of SearchStates
  *
  */
 public class SearchPath {
@@ -9,16 +9,17 @@ public class SearchPath {
 	private LinkedList<SearchState> searchStates;
 
 	/**
-	 * @TODO Comment
+	 * Constructor
 	 * 
-	 * @param searchStates
+	 * creates a new SearchPath containing all SearchStates in the given list
+	 * 
+	 * @param searchStates a list of SearchStates
 	 */
 	public SearchPath(LinkedList<SearchState> searchStates) {
 		this.searchStates = searchStates;
 	}
 
 	/**
-	 * @TODO Comment
 	 * We only model simple costs right now. search space is not weighed.
 	 * ie. cost of path = number of arcs
 	 * 
@@ -29,19 +30,19 @@ public class SearchPath {
 	}
 
 	/**
-	 * @TODO Comment
+	 * Get the last State of this path
 	 * 
-	 * @return
+	 * @return last State of this path
 	 */
 	public SearchState getLast() {
 		return searchStates.getLast();
 	}
 
 	/**
-	 * @TODO Comment
+	 * Get a new path by extending this path with the given SearchStates
 	 * 
-	 * @param successor
-	 * @return
+	 * @param successor a searchState by which to expand the current path
+	 * @return the new expanded SearchPath 
 	 */
 	public SearchPath extend(SearchState successor) {
 		LinkedList<SearchState> extendedList = new LinkedList<SearchState>(searchStates);
@@ -50,17 +51,17 @@ public class SearchPath {
 	}
 
 	/**
-	 * @TODO Comment
+	 * Check whether this path contains a search state
 	 * 
-	 * @param state
-	 * @return
+	 * @param state the state to check for
+	 * @return true if state is part of this path
 	 */
 	public boolean contains(SearchState state) {
 		return searchStates.contains(state);
 	}
 
 	/**
-	 * @TODO Comment
+	 * print the searchPath.
 	 */
 	public void print() {
 		SearchState first = searchStates.getFirst();
@@ -74,9 +75,9 @@ public class SearchPath {
 	}
 
 	/**
-	 * @TODO Comment
+	 * get the list of SearchStates representing this path.
 	 * 
-	 * @return
+	 * @return the list of SearchStates that make up this path
 	 */
 	public LinkedList<SearchState> getStates() {
 		return searchStates;

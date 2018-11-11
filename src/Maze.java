@@ -32,7 +32,7 @@ public class Maze {
 		this.maxRows = rows;
 		this.startingPoints = new LinkedList<Point>();
 		this.portals = new HashMap<Point,Point>();
-		this.setGoalPoints(new LinkedList<Point>());
+		this.goalPoints = new LinkedList<Point>();
 		this.maxManhattenDistance = maxColumns*maxRows;
 		
 	}
@@ -47,16 +47,17 @@ public class Maze {
 	}
 
 	/**
+	 * Returns the Map representing the portals of this maze
 	 * 
-	 * @TODO
-	 * @return a map with the portals where we have two entrys for each portal such as (X=1,Y=1) = (X=2,Y=2), (X=2,Y=2)=(X=1,Y=1)
+	 * @return a map with the portals where we have two entries for each portal such as (1,1)=>(2,2), (2,2)=>(1,1)
 	 */
 	public HashMap<Point, Point> getPortals() {
 		return portals;
 	}
 
 	/**
-	 *  @TODO
+	 * Returns the number of rows.
+	 * 
 	 * @return  the maximal number of rows
 	 */
 	public int getMaxRows() {
@@ -64,7 +65,8 @@ public class Maze {
 	}
 
 	/**
-	 * @TODO
+	 * Return the number of columns
+	 * 
 	 * @return the maximal number of columns
 	 */
 	public int getMaxColumns() {
@@ -73,6 +75,7 @@ public class Maze {
 
 	/**
      * maps a String to the given row of the given char-array
+     * and takes care of portal mapping
      * 
      * @param currentRow index of the current row
      * @param line a String consisting of the chars to map to the current row
@@ -102,14 +105,18 @@ public class Maze {
     			// insert current Point into temporary Map digit -> point
     			// and get previous value for that digit.
     			Point lastValue = portalPoints.put(digit, new Point(i,currentRow));
-    			//if there was a previous value we have found a new portal pair
+    			// if there was a previous value we have found a new portal pair
     			if (lastValue != null) {
     				// add both ordered pairs of the two portal ends to final portal Map
     				maze.portals.put(new Point(i,currentRow), lastValue);
     			    maze.portals.put(lastValue, new Point(i,currentRow));
+    			    // set the temporary value-mapping for this digit to null
+    			    // to allow us to detect whether there a more than two portal ends
     			    portalPoints.put(digit, null);
+    			// if there was no value, but the digit was already added to the map,
+    			// we have more than two portal ends making the mapping ambiguous.
     			} else if (containsDigit){
-    				throw new Exception("Portal mapping ambigous");
+    				throw new Exception("Portal mapping ambiguous");
     			}
     			
     		}
@@ -191,7 +198,7 @@ public class Maze {
 					switch(maze[x][y]) {
 						case ' ' : markedSpot = '|'; break;
 						case 's' : markedSpot = '$'; break;
-						case 'g' : markedSpot = 'Â§'; break;
+						case 'g' : markedSpot = '§'; break;
 						default: markedSpot = 'O';
 					}
 					System.out.print(markedSpot);
@@ -251,20 +258,17 @@ public class Maze {
 	}
 
 	/**
-	 * @return
+	 * Returns the Goal Points of this Maze
+	 * 
+	 * @return a List of goal points
 	 */
 	public List<Point> getGoalPoints() {
 		return goalPoints;
 	}
 
 	/**
-	 * @param goalPoints
-	 */
-	public void setGoalPoints(List<Point> goalPoints) {
-		this.goalPoints = goalPoints;
-	}
-
-	/**
+	 * Returns the maximal Manhattan distance of two points on this maze
+	 * 
 	 * @return
 	 */
 	public int getMaxManhattenDistance() {

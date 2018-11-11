@@ -30,10 +30,13 @@ public abstract class BasicSearch {
 	}
 	
 	/**
-	 * @TODO Comment
-	 * a function we in wich the search is started , we check if we have a soloution and either add that soloution to our solotuion 
-	 * or continue looking for a solotuion using the expandCurrentPath function
-	 * we also can decide whether we want one or more soloutions, whether we want to use multiple pathpruning and so on
+	 * a method starting/continuing the search. We use the generic search algorithm. While the frontier is not
+	 * empty, a path from the frontier is chosen and checked if it's a solution.
+	 * Either the solution is added to a list of solutions or the current path is expanded.
+	
+	 * we also can decide whether we want to stop after the first solutions (continuing is
+	 * possible by calling this method again, search will continue after the last solution. 
+	 * multiple path pruning, cycle detection and verbosity are available as options
 	 * 
 	 * @param stopAfterFirstSolution
 	 * @param multiplePathPruning
@@ -74,7 +77,8 @@ public abstract class BasicSearch {
 
 	/*
 	 * we do can do multiple path pruning and cycle detection
-	 * and we add new succesors to the current path in order to continue searching for a solution
+	 * and we add the successors of the last element of the current path 
+	 * in order to get the expanded paths
 	 */
 	private void expandCurrentPath(boolean multiplePathPruning, boolean cycleDetection) {
 
@@ -103,9 +107,10 @@ public abstract class BasicSearch {
 	}
 
 	/**
-	 * @TODO Comment
-	 * we need some states in order to start, this function adds these star states to the frontier so that we can use them
-	 * @param state
+	 * we need some state to start searching from, 
+	 * this function adds this start state to the frontier so that we can use it as a beginning
+	 * 
+	 * @param state the state from which to start searching.
 	 */
 	public void setStartState(SearchState state) {
 		reset();
@@ -116,8 +121,8 @@ public abstract class BasicSearch {
 	
 
 	/**
-	 * @TODO Comment
-	 * this function resets our variables to the default
+	 * this function clears the frontier and all fields representing the 
+	 * current progress of the search to restart searching
 	 */
 	public void reset() {
 		this.visitedStates.clear();
@@ -128,44 +133,44 @@ public abstract class BasicSearch {
 	};
 
 	/**
-	 * @TODO Comment
-	 * we delete the paths in our frontier
+	 * Clears the frontier of all paths 
+	 * 
 	 */
 	abstract public void clearFrontier();
 	
 	/**
-	 * @TODO Comment
-	 * we add a new path to the frontier
+	 * adds a new path to the frontier
 	 * 
-	 * @param newPath
+	 * @param newPath the path to be added
 	 */
 	abstract public void addToFrontier(SearchPath newPath);
 
 	/**
-	 * @TODO Comment
-	 * we take one of the paths and start using it
-	 * @return a search path
+	 * remove the next path from the frontier
+	 
+	 * @return a SearchPath 
 	 */
 	abstract public SearchPath removeNextPath();
 
 	/**
 	 * 
-	 * @TODO Comment
+	 * Get the frontier-size
 	 * 
 	 * @return size of the frontier
 	 */
 	abstract public int getFrontierSize();
 
 	/**
-	 * @TODO Comment
-	 * @return ture when the frontier is empty otherwise false
+	 * checks whether the frontier is empty
+	 * 
+	 * @return true when the frontier is empty otherwise false
 	 */
 	abstract public boolean isFrontierEmpty();
 
 	/**
-	 * @TODO Comment
-	 * we get the next path (very similiar to
-	 * @return
+	 * Returns the next path to be removed from the frontier 
+	 * without removing it
+	 * @return the next SearchPath to be removed
 	 */
 	abstract public SearchPath getNextPath();
 	

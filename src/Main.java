@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
 
 		// Create the maze from a file
-    	Maze maze = Maze.createMazeFromFile("src/mazes/maze05.txt");
+    	Maze maze = Maze.createMazeFromFile("src/mazes/maze02.txt");
 		// Get first startstate of the maze. We allow multiple startstates. 
     	MazeSearchState startState = MazeSearchState.getStartStates(maze).get(0);
     	Scanner scanner = new Scanner(System.in);
@@ -23,10 +23,13 @@ public class Main {
 			case "q" : return;
 		}
 		// BreadthFirst Demo:
-    	BreadthFirstSearch bfs = new BreadthFirstSearch();
-    	bfs.setStartState(startState);
-    	stepByStep: while (!bfs.isFrontierEmpty()) {
-    		bfs.search(true, false, true, true);
+    	// create new bfs object
+		BreadthFirstSearch bfs = new BreadthFirstSearch();
+    	// set start state
+		bfs.setStartState(startState);
+    	// search for successive solutions as long as the frontier is not empty
+		stepByStep: while (!bfs.isFrontierEmpty()) {
+    		bfs.search(true, true, true, true);
     		System.out.println("Enter 'q' to terminate BreadthFirstSearch and start DepthFirstSearch");
     		System.out.println("Press Enter to continue BFS.");
     		System.out.print("§>");
@@ -39,7 +42,7 @@ public class Main {
     	DepthFirstSearch dfs = new DepthFirstSearch();
     	dfs.setStartState(startState);
     	stepByStep: while (!dfs.isFrontierEmpty()) {
-    		dfs.search(true, false, true, true);
+    		dfs.search(true, true, true, true);
     		System.out.println("Enter 'q' to terminate SearchDemo");
     		System.out.print("§>");
     		switch(scanner.nextLine()){

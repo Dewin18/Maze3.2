@@ -54,14 +54,17 @@ public interface SearchState {
 
 
 	/**
-	 * @TODO Comment
+	 * Check whether this searchstate class has a drawable path.
 	 * 
-	 * @return
+	 * @return true if paths can be drawn.
 	 */
 	public boolean hasDrawablePath();
 
 	/**
-	 * @param searchStates
+	 * print a list of searchStates
+	 * @TODO make static?!?
+	 * 
+	 * @param searchStates the list of search states to be printed.
 	 */
 	public void printPath(List<SearchState> searchStates);
 	

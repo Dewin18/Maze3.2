@@ -2,15 +2,15 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 /**
- * @TODO
- *Here we Implement the Depth first Search by using the Basic Search and further implementing the abstract functions
+ * Here we implement the Depth first Search by using the Basic Search 
+ * and implementing frontier by a FIFO-Queue (a stack)
  */
 public class DepthFirstSearch extends BasicSearch {
 
 	private Deque<SearchPath> stack;
 
 	/**
-	 * @TODO
+	 * Constructor 
 	 * Initiating the stack
 	 */
 	public DepthFirstSearch() {
