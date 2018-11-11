@@ -11,10 +11,12 @@ public class MazeSearchState implements SearchState {
 
 	/**
 	 * @TODO
+	 * a constant wwich is used later on
 	 */
 	public final static int NONE = 0;
 	/**
 	 * @TODO
+	 * a constant wwich is used later on
 	 */
 	public final static int MANHATTEN_DISTANCE = 1;
 	

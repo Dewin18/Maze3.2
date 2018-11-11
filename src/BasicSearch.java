@@ -5,6 +5,7 @@ import java.util.List;
 /**
  * @TODO Comment
  *
+ *An abstract class for a few function that we need in the other Searches such as BFS or DFS
  */
 public abstract class BasicSearch {
 	
@@ -15,6 +16,11 @@ public abstract class BasicSearch {
 	
 	/**
 	 * @TODO Comment
+	 * a constructor with a few variables that we need
+	 * @param visitedStates the states we have visted so far, we need this for example for cycle detection
+	 * @param solutions a list wich contains every soloution we found so far
+	 * @param currentPath a searchPath wich we neeed so we know where we are at the moment
+	 * @param paths added
 	 */
 	public BasicSearch() {
 		visitedStates = new HashSet<SearchState>();
@@ -25,6 +31,9 @@ public abstract class BasicSearch {
 	
 	/**
 	 * @TODO Comment
+	 * a function we in wich the search is started , we check if we have a soloution and either add that soloution to our solotuion 
+	 * or continue looking for a solotuion using the expandCurrentPath function
+	 * we also can decide whether we want one or more soloutions, whether we want to use multiple pathpruning and so on
 	 * 
 	 * @param stopAfterFirstSolution
 	 * @param multiplePathPruning
@@ -63,6 +72,10 @@ public abstract class BasicSearch {
 		}	
 	}
 
+	/*
+	 * we do can do multiple path pruning and cycle detection
+	 * and we add new succesors to the current path in order to continue searching for a solution
+	 */
 	private void expandCurrentPath(boolean multiplePathPruning, boolean cycleDetection) {
 
 		List<SearchState> successors = currentPath.getLast().getSuccessors();
@@ -91,6 +104,7 @@ public abstract class BasicSearch {
 
 	/**
 	 * @TODO Comment
+	 * we need some states in order to start, this function adds these star states to the frontier so that we can use them
 	 * @param state
 	 */
 	public void setStartState(SearchState state) {
@@ -103,6 +117,7 @@ public abstract class BasicSearch {
 
 	/**
 	 * @TODO Comment
+	 * this function resets our variables to the default
 	 */
 	public void reset() {
 		this.visitedStates.clear();
@@ -114,11 +129,13 @@ public abstract class BasicSearch {
 
 	/**
 	 * @TODO Comment
+	 * we delete the paths in our frontier
 	 */
 	abstract public void clearFrontier();
 	
 	/**
 	 * @TODO Comment
+	 * we add a new path to the frontier
 	 * 
 	 * @param newPath
 	 */
@@ -126,26 +143,28 @@ public abstract class BasicSearch {
 
 	/**
 	 * @TODO Comment
-	 * 
-	 * @return
+	 * we take one of the paths and start using it
+	 * @return a search path
 	 */
 	abstract public SearchPath removeNextPath();
 
 	/**
 	 * 
 	 * @TODO Comment
-	 * @return
+	 * 
+	 * @return size of the frontier
 	 */
 	abstract public int getFrontierSize();
 
 	/**
 	 * @TODO Comment
-	 * @return
+	 * @return ture when the frontier is empty otherwise false
 	 */
 	abstract public boolean isFrontierEmpty();
 
 	/**
 	 * @TODO Comment
+	 * we get the next path (very similiar to
 	 * @return
 	 */
 	abstract public SearchPath getNextPath();

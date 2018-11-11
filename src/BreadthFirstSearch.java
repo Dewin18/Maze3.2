@@ -1,8 +1,8 @@
 import java.util.LinkedList;
 
 /**
- * @TODO
- *
+ * @TODO 
+ * Here we Implement the Breadth first Search by using the Basic Search and further implementing the abstract functions
  */
 public class BreadthFirstSearch extends BasicSearch {
 
@@ -11,6 +11,7 @@ public class BreadthFirstSearch extends BasicSearch {
 	
 	/**
 	 * @TODO
+	 * Initiating the queue 
 	 */
 	public BreadthFirstSearch() {
 		queue = new LinkedList<SearchPath>();
@@ -39,7 +40,7 @@ public class BreadthFirstSearch extends BasicSearch {
 
 	@Override
 	public SearchPath getNextPath() {
-		return queue.poll();
+		return queue.peek();
 	}
 
 	@Override

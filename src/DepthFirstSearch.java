@@ -3,7 +3,7 @@ import java.util.LinkedList;
 
 /**
  * @TODO
- *
+ *Here we Implement the Depth first Search by using the Basic Search and further implementing the abstract functions
  */
 public class DepthFirstSearch extends BasicSearch {
 
@@ -11,6 +11,7 @@ public class DepthFirstSearch extends BasicSearch {
 
 	/**
 	 * @TODO
+	 * Initiating the stack
 	 */
 	public DepthFirstSearch() {
 		stack = new LinkedList<SearchPath>();

@@ -2,8 +2,10 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
- * @TODO
- *
+ * @TODO Comment
+ * A parent class of heuristic searches, which allows to reset StateSearches and to add and remove paths from the frontier.
+ * It also allows to get the frontierSize, to check if frontier is empty, to get next frontier path and to clear it. 
+ * @param Comparator<SearchPath> comp 
  */
 public class BasicHeuristicSearch extends BasicSearch {
 
