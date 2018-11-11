@@ -1,7 +1,7 @@
 import java.util.Comparator;
 
 /**
- * @TODO
+ * Test
  *
  */
 public class AStarComparator implements Comparator<SearchPath> {
