@@ -2,7 +2,7 @@ import java.util.LinkedList;
 
 /**
  * @TODO Comment
- * a class to implement serachPaths wich are used for BFS and DFS where we have paths
+ * a class to implement serachPaths which are used for BFS and DFS where we have paths
  *
  */
 public class SearchPath {
