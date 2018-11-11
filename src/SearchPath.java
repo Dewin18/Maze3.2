@@ -19,6 +19,8 @@ public class SearchPath {
 
 	/**
 	 * @TODO Comment
+	 * We only model simple costs right now. search space is not weighed.
+	 * ie. cost of path = number of arcs
 	 * 
 	 * @return
 	 */
