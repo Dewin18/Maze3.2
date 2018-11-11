@@ -49,15 +49,15 @@ public class Maze {
 	/**
 	 * 
 	 * @TODO
-	 * @return
+	 * @return a map with the portals where we have two entrys for each portal such as (X=1,Y=1) = (X=2,Y=2), (X=2,Y=2)=(X=1,Y=1)
 	 */
 	public HashMap<Point, Point> getPortals() {
 		return portals;
 	}
 
 	/**
-	 * @TODO
-	 * @return
+	 *  @TODO
+	 * @return  the maximal number of rows
 	 */
 	public int getMaxRows() {
 		return maxRows;
@@ -65,7 +65,7 @@ public class Maze {
 
 	/**
 	 * @TODO
-	 * @return
+	 * @return the maximal number of columns
 	 */
 	public int getMaxColumns() {
 		return maxColumns;
@@ -191,7 +191,7 @@ public class Maze {
 					switch(maze[x][y]) {
 						case ' ' : markedSpot = '|'; break;
 						case 's' : markedSpot = '$'; break;
-						case 'g' : markedSpot = '§'; break;
+						case 'g' : markedSpot = 'Â§'; break;
 						default: markedSpot = 'O';
 					}
 					System.out.print(markedSpot);
