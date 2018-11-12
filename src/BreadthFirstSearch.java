@@ -3,7 +3,7 @@ import java.util.LinkedList;
 /**
  * Here we implement the Breadth first Search 
  * by using the Basic Search and 
- * implementing the frontier by a LIFO-Queue
+ * implementing the frontier by a FIFO-Queue
  */
 public class BreadthFirstSearch extends BasicSearch {
 

@@ -29,6 +29,7 @@ public class Main {
 		bfs.setStartState(startState);
     	// search for successive solutions as long as the frontier is not empty
 		stepByStep: while (!bfs.isFrontierEmpty()) {
+			// we search using cycle detection and multiple path pruning 
     		bfs.search(true, true, true, true);
     		System.out.println("Enter 'q' to terminate BreadthFirstSearch and start DepthFirstSearch");
     		System.out.println("Press Enter to continue BFS.");

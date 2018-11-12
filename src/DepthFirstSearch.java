@@ -3,7 +3,7 @@ import java.util.LinkedList;
 
 /**
  * Here we implement the Depth first Search by using the Basic Search 
- * and implementing frontier by a FIFO-Queue (a stack)
+ * and implementing frontier by a LIFO-Queue (a stack)
  */
 public class DepthFirstSearch extends BasicSearch {
 

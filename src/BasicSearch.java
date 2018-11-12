@@ -3,9 +3,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @TODO Comment
+ * An abstract base class implementing the generic Search Algorithm.
+ * Every search strategy can extend this class, implementing only the 
+ * frontier and the way paths are added or retrieved.
  *
- *An abstract class for a few function that we need in the other Searches such as BFS or DFS
  */
 public abstract class BasicSearch {
 	
@@ -15,17 +16,23 @@ public abstract class BasicSearch {
 	private int pathsAdded;
 	
 	/**
-	 * @TODO Comment
-	 * a constructor with a few variables that we need
-	 * @param visitedStates the states we have visted so far, we need this for example for cycle detection
-	 * @param solutions a list wich contains every soloution we found so far
-	 * @param currentPath a searchPath wich we neeed so we know where we are at the moment
+	 * constructor 
+	 * 
+	 * Initializes a few fields to track the search progress.
+	 * @param visitedStates 
+	 * @param solutions 
+	 * @param currentPath
 	 * @param paths added
 	 */
 	public BasicSearch() {
+		
+		// the states we have visited so far, we need this for multiple path pruning
 		visitedStates = new HashSet<SearchState>();
+		// a list which contains every solution we found so far
 		solutions = new  LinkedList<SearchPath>();
+		// the current searchPath which we need so we know where we are at the moment
 		currentPath = new SearchPath(new LinkedList<SearchState>());
+		// number of paths added to the frontier during the search. For statistics
 		pathsAdded = 0;
 	}
 	
