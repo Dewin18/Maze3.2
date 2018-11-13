@@ -2,10 +2,11 @@ import java.util.LinkedList;
 
 public class Main {
 
+
     public static void main(String[] args) {
 
 	// read a maze from a .txt file and mapps it into a 2D array of spots
-	MazeReader mr = new MazeReader(10, 20, "src/mazes/maze01.txt");
+	MazeReader mr = new MazeReader("src/mazes/maze01.txt");
 	Spot[][] maze = mr.getMaze();
 
 	// print the maze on the console

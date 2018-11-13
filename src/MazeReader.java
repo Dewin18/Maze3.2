@@ -1,59 +1,70 @@
 import java.awt.Point;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class MazeReader {
 
+    private ArrayList<LinkedList<Character>> mazeWrapper;
     private Spot[][] maze;
-    private final int rows;
-    private final int columns;
+
+    private int rows;
+    private int columns;
 
     /**
      * Initialize a new 2D array with rows and columns
      * 
-     * @param rows of the maze
-     * @param columns of the maze
      * @param mazePath local path to the maze.txt
      */
-    public MazeReader(int rows, int columns, String mazePath) {
-	this.rows = rows;
-	this.columns = columns;
-
-	maze = new Spot[rows][columns];
-	analyzeMaze(mazePath);
+    public MazeReader(String mazePath) {
+	mazeWrapper(mazePath);
+	initMaze();
+	mazeMapping();
 	setSpotNeighbours();
     }
 
-    private void analyzeMaze(String mazePath) {
+    private void mazeWrapper(String mazePath) {
+	mazeWrapper = new ArrayList<>();
+
 	try {
 	    FileReader fileReader = new FileReader(mazePath);
 	    BufferedReader bufferedReader = new BufferedReader(fileReader);
 	    String line;
-	    int row = 0;
 
 	    while ((line = bufferedReader.readLine()) != null) {
-		mazeMapping(row, line);
-		row++;
+
+		LinkedList<Character> mazeSegment = new LinkedList<>();
+
+		for (int i = 0; i < line.length(); i++) {
+		    mazeSegment.add(line.charAt(i));
+		}
+
+		mazeWrapper.add(mazeSegment);
 	    }
 	    bufferedReader.close();
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}
     }
+    
+    private void initMaze() {
+	this.rows = mazeWrapper.size();
+	this.columns = mazeWrapper.get(0).size();
 
-    /**
-     * create for each char from the maze.txt file a new Spot object and place it
-     * into the 2D array (maze[][]).
-     * 
-     * @param currentRow
-     * @param line of chars
-     */
-    private void mazeMapping(int currentRow, String line) {
-	for (int i = 0; i < line.length(); i++) {
-	    char mazeSymbol = line.charAt(i);
-	    Point position = new Point(currentRow, i);
-	    maze[currentRow][i] = new Spot(position, mazeSymbol);
+	maze = new Spot[rows][columns];
+    }
+
+    private void mazeMapping() {
+	for (int i = 0; i < rows; i++) {
+	    for (int j = 0; j < columns; j++) {
+		Point position = new Point(i, j);
+		char symbol = mazeWrapper.get(i).get(j);
+		Spot spot = new Spot(position, symbol);
+		maze[i][j] = spot;
+	    }
 	}
     }
 
@@ -97,8 +108,7 @@ public class MazeReader {
 	}
     }
 
-    
-    //just print the maze char by char on the console
+    // just print the maze char by char on the console
     public void printMaze() {
 	for (int i = 0; i < rows; i++) {
 	    for (int j = 0; j < columns; j++) {
@@ -107,7 +117,7 @@ public class MazeReader {
 	    System.out.println();
 	}
     }
-    
+
     public Spot[][] getMaze() {
 	return maze;
     }
