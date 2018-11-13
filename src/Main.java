@@ -1,3 +1,4 @@
+import java.util.LinkedList;
 
 public class Main {
 
@@ -12,14 +13,19 @@ public class Main {
 
 	System.out.println();
 
-	// declare some test indices for the 2D array
+	// declare some indices for the start spot in the 2D array
 	int row = 4;
 	int column = 4;
 
-	// retrieve the spot from the location
+	// retrieve the start spot from the location
 	Spot spot = maze[row][column];
+	
+	//Create a new BFS
+	BFS bfs = new BFS();
+	LinkedList<Spot> goalPath = bfs.search(spot);
 
-	System.out.println("Spot: " + spot);
-	System.out.println("Spot neighbours: " + spot.getNeighbours());
+	MazeWriter mw = new MazeWriter();
+	mw.writeGoalPath(maze, goalPath);
+	mr.printMaze();
     }
 }

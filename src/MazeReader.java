@@ -1,3 +1,4 @@
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -51,7 +52,8 @@ public class MazeReader {
     private void mazeMapping(int currentRow, String line) {
 	for (int i = 0; i < line.length(); i++) {
 	    char mazeSymbol = line.charAt(i);
-	    maze[currentRow][i] = new Spot(currentRow + "." + i, mazeSymbol);
+	    Point position = new Point(currentRow, i);
+	    maze[currentRow][i] = new Spot(position, mazeSymbol);
 	}
     }
 

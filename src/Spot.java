@@ -1,10 +1,10 @@
-import java.util.HashSet;
-import java.util.Set;
+import java.awt.Point;
+import java.util.LinkedList;
 
 public class Spot {
 
-    private final String spotID;
-    private final char spotSymbol;
+    private final Point position;
+    private char symbol;
 
     private Spot up;
     private Spot down;
@@ -13,18 +13,22 @@ public class Spot {
 
     /**
      * 
-     * @param spotID a unique ID for a spot
-     * @param spotSymbol a spot symbol consists of 'x' = wall, 's' = start, 'g' = goal or ' ' = no wall
+     * @param position a unique position for a spot
+     * @param symbol a spot symbol consists of 'x' = wall, 's' = start, 'g' = goal or ' ' = no wall
      */
-    public Spot(String spotID, char spotSymbol) {
-	this.spotID = spotID;
-	this.spotSymbol = spotSymbol;
+    public Spot(Point position, char symbol) {
+	this.position = position;
+	this.symbol = symbol;
     }
 
     public char getSymbol() {
-	return spotSymbol;
+	return symbol;
     }
 
+    public void setSymbol(char symbol) {
+	this.symbol = symbol;
+    }
+    
     public void setSpotUp(Spot up) {
 	this.up = up;
     }
@@ -41,48 +45,36 @@ public class Spot {
 	this.right = right;
     }
 
-    public Spot getSpotUp() {
-	return up;
+    public Point getSpotPosition() {
+	return position;
     }
-
-    public Spot getSpotDown() {
-	return down;
-    }
-
-    public Spot getSpotLeft() {
-	return left;
-    }
-
-    public Spot getSpotRight() {
-	return right;
-    }
-
-    public String getSpotID() {
-	return spotID;
-    }
-
+    
     /**
      * Get all spot neighbours from a spot
      * @return a spot set of all neighbours from a spot
      */
-    public Set<Spot> getNeighbours() {
-	Set<Spot> neighbours = new HashSet<>();
+    public LinkedList<Spot> getNeighbours() {
+	LinkedList<Spot> neighbours = new LinkedList<>();
 
 	if (up != null)
 	    neighbours.add(up);
+	if (right != null)
+	    neighbours.add(right);
 	if (down != null)
 	    neighbours.add(down);
 	if (left != null)
 	    neighbours.add(left);
-	if (right != null)
-	    neighbours.add(right);
 
 	return neighbours;
+    }
+    
+    public boolean hasNeighbours() {
+	return up != null || down != null || left != null || right != null;
     }
 
     @Override
     public String toString() {
-	return "[spotID=" + spotID + ", spotSymbol=" + spotSymbol + "]";
+	return "spotID=" + "(" +position.x + "." + position.y + ")";
     }
 
 }
