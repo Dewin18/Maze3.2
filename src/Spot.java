@@ -3,20 +3,23 @@ import java.util.LinkedList;
 
 public class Spot {
 
+    private LinkedList<Spot> neighbours;
+    
     private final Point position;
     private char symbol;
-
-    private Spot up;
-    private Spot down;
-    private Spot left;
-    private Spot right;
 
     /**
      * 
      * @param position a unique position for a spot
-     * @param symbol a spot symbol consists of 'x' = wall, 's' = start, 'g' = goal or ' ' = no wall
+     * @param symbol   a spot symbol has different meanings:
+     * 			'x' = wall, 
+     * 			's' = start, 
+     * 			'g' = goal
+     *                  ' ' = no wall
+     *              [1..n]  = any different char (number or letter) is a portal
      */
     public Spot(Point position, char symbol) {
+	neighbours = new LinkedList<>();
 	this.position = position;
 	this.symbol = symbol;
     }
@@ -28,53 +31,46 @@ public class Spot {
     public void setSymbol(char symbol) {
 	this.symbol = symbol;
     }
-    
+
     public void setSpotUp(Spot up) {
-	this.up = up;
+	neighbours.add(up);
     }
 
     public void setSpotDown(Spot down) {
-	this.down = down;
+	neighbours.add(down);
     }
 
     public void setSpotLeft(Spot left) {
-	this.left = left;
+	neighbours.add(left);
     }
 
     public void setSpotRight(Spot right) {
-	this.right = right;
+	neighbours.add(right);
     }
 
     public Point getSpotPosition() {
 	return position;
     }
-    
+
     /**
      * Get all spot neighbours from a spot
-     * @return a spot set of all neighbours from a spot
+     * 
+     * @return a set of spots with all neighbours
      */
     public LinkedList<Spot> getNeighbours() {
-	LinkedList<Spot> neighbours = new LinkedList<>();
-
-	if (up != null)
-	    neighbours.add(up);
-	if (right != null)
-	    neighbours.add(right);
-	if (down != null)
-	    neighbours.add(down);
-	if (left != null)
-	    neighbours.add(left);
-
 	return neighbours;
     }
     
-    public boolean hasNeighbours() {
-	return up != null || down != null || left != null || right != null;
+    public void swapSpotNeighbours(Spot spot) {
+	LinkedList<Spot> thisSpot = new LinkedList<>(neighbours);
+	LinkedList<Spot> nextSpot = new LinkedList<>(spot.neighbours);
+	
+	spot.neighbours = thisSpot;
+	neighbours = nextSpot;
     }
 
     @Override
     public String toString() {
-	return "spotID=" + "(" +position.x + "." + position.y + ")";
+	return "spotID=" + "(" + position.x + "." + position.y + ")";
     }
-
 }

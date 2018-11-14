@@ -15,14 +15,14 @@ public class Main {
 	System.out.println();
 
 	// declare some indices for the start spot in the 2D array
-	int row = 4;
-	int column = 4;
+	int startRow = 4;
+	int startColumn = 4;
 
 	// retrieve the start spot from the location
-	Spot spot = maze[row][column];
+	Spot spot = maze[startRow][startColumn];
 	
 	//Create a new BFS
-	BFS bfs = new BFS();
+	BFS  bfs = new BFS();
 	LinkedList<Spot> goalPath = bfs.search(spot);
 
 	MazeWriter mw = new MazeWriter();

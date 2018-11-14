@@ -35,7 +35,6 @@ public class BFS extends GraphSearch {
 		}
 	    }
 	}
-
 	return null;
     }
 
