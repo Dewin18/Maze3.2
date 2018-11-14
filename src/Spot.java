@@ -66,7 +66,7 @@ public class Spot {
 	LinkedList<Spot> nextSpot = new LinkedList<>(spot.neighbours);
 	
 	spot.neighbours = thisSpot;
-	neighbours = nextSpot;
+	this.neighbours = nextSpot;
     }
 
     @Override
