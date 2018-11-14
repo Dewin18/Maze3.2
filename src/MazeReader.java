@@ -6,8 +6,8 @@ public class MazeReader {
 
     private ArrayList<LinkedList<Character>> mazeWrapper;
     private TreeSet<Portal> portals;
+   
     private Spot[][] maze;
-
     private int rows;
     private int columns;
 
