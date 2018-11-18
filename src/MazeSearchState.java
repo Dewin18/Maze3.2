@@ -156,7 +156,7 @@ public class MazeSearchState implements SearchState {
 			distance = Math.abs(goal.x-position.x)+Math.abs(goal.y-position.y);
 			minDistanceGoal = Math.min(distance, minDistanceGoal);
 		}
-		for (Point portal : maze.getPortalPoints()) {
+		for (Point portal : maze.getPortals().keySet()) {
 			distance = Math.abs(portal.x-position.x)+Math.abs(portal.y-position.y)+1;
 			minDistancePortal = Math.min(distance, minDistancePortal); 
 		}

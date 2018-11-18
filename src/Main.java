@@ -12,9 +12,10 @@ public class Main {
     public static void main(String[] args) {
 
 		// Create the maze from a file
-    	Maze maze = Maze.createMazeFromFile("src/mazes/maze06.txt");
+    	Maze maze = Maze.createMazeFromFile("src/mazes/mazelarge01.txt");
 		// Get first startstate of the maze. We allow multiple startstates. 
     	MazeSearchState startState = MazeSearchState.getStartStates(maze).get(0);
+    	/*
     	Scanner scanner = new Scanner(System.in);
 		System.out.println("Enter 'q' to quit");
 		System.out.println("Press Enter to start BreadthFirstSearch.");
@@ -22,6 +23,7 @@ public class Main {
 		switch(scanner.nextLine()){
 			case "q" : return;
 		}
+		
 		// BreadthFirst Demo:
     	// create new bfs object
 		BreadthFirstSearch bfs = new BreadthFirstSearch();
@@ -50,10 +52,10 @@ public class Main {
     			case "q" : break stepByStep;
     		}
     	}
-    	
+    	*/
     	//A* Demo
-    	/*
-    	MazeSearchState.setHeuristic(MazeSearchState.MANHATTEN_DISTANCE);
+    	
+    	MazeSearchState.setHeuristic(MazeSearchState.PORTAL_DISTANCE);
     	BasicHeuristicSearch aStarSearch = new BasicHeuristicSearch(new AStarComparator()); 
     	aStarSearch.setStartState(startState);
     	stepByStep: while (aStarSearch.getFrontierSize() > 0) {
@@ -65,7 +67,7 @@ public class Main {
     			case "q" : break stepByStep;
     		}
     	}    
-    	*/	
+    	
 
     }
     
