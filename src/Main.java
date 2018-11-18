@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
 
 		// Create the maze from a file
-    	Maze maze = Maze.createMazeFromFile("src/mazes/mazelarge01.txt");
+    	Maze maze = Maze.createMazeFromFile("src/mazes/maze07.txt");
 		// Get first startstate of the maze. We allow multiple startstates. 
     	MazeSearchState startState = MazeSearchState.getStartStates(maze).get(0);
     	/*
@@ -32,7 +32,7 @@ public class Main {
     	// search for successive solutions as long as the frontier is not empty
 		stepByStep: while (!bfs.isFrontierEmpty()) {
 			// we search using cycle detection and multiple path pruning 
-    		bfs.search(true, true, true, true);
+    		bfs.search(false, true, true, true);
     		System.out.println("Enter 'q' to terminate BreadthFirstSearch and start DepthFirstSearch");
     		System.out.println("Press Enter to continue BFS.");
     		System.out.print("§>");
@@ -45,7 +45,7 @@ public class Main {
     	DepthFirstSearch dfs = new DepthFirstSearch();
     	dfs.setStartState(startState);
     	stepByStep: while (!dfs.isFrontierEmpty()) {
-    		dfs.search(true, true, true, true);
+    		dfs.search(false, true, true, true);
     		System.out.println("Enter 'q' to terminate SearchDemo");
     		System.out.print("§>");
     		switch(scanner.nextLine()){
@@ -55,7 +55,7 @@ public class Main {
     	*/
     	//A* Demo
     	
-    	MazeSearchState.setHeuristic(MazeSearchState.PORTAL_DISTANCE);
+    	MazeSearchState.setHeuristic(MazeSearchState.MANHATTEN_DISTANCE);
     	BasicHeuristicSearch aStarSearch = new BasicHeuristicSearch(new AStarComparator()); 
     	aStarSearch.setStartState(startState);
     	stepByStep: while (aStarSearch.getFrontierSize() > 0) {
