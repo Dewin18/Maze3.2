@@ -149,17 +149,18 @@ public class MazeSearchState implements SearchState {
 		//entweder die normale heuristik direckt zum ziel oder wenn man kann zum portal,
 		//da es die möglichkeit gibt vom portal irgendwohin direckt neben das ziel zu kommen.
 		//bevorzugt sehr stark portale, man könnte vieleicht ne rekursion einbauen wo wir vom portal partner wieder die heuristik berechnen.
-		int minDistance = maze.getMaxPortalDistance();
+		int minDistancePortal = maze.getMaxPortalDistance();
+		int minDistanceGoal = maze.getMaxPortalDistance();
 		int distance;
 		for (Point goal :maze.getGoalPoints()) {
 			distance = Math.abs(goal.x-position.x)+Math.abs(goal.y-position.y);
-			minDistance = Math.min(distance, minDistance);
+			minDistanceGoal = Math.min(distance, minDistanceGoal);
 		}
 		for (Point portal : maze.getPortalPoints()) {
 			distance = Math.abs(portal.x-position.x)+Math.abs(portal.y-position.y)+1;
-			minDistance = Math.min(distance, minDistance); 
+			minDistancePortal = Math.min(distance, minDistancePortal); 
 		}
-		return minDistance;
+		return Math.min(minDistancePortal, minDistanceGoal);
 	}
 
 	private int getManhattenDistance() {
