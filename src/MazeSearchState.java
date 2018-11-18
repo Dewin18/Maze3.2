@@ -101,6 +101,7 @@ public class MazeSearchState implements SearchState {
 	 * @return a List containing all start states for the given maze.
 	 */
 	public static List<MazeSearchState> getStartStates(Maze maze) {
+		states = new HashMap<Point, MazeSearchState>();
 		List<MazeSearchState> startStates = new LinkedList<MazeSearchState>();
 		// Create and add to return list a MazeSearchState for all Starting points of the maze
 		for (Point start: maze.getStartingPoints()) {
@@ -146,28 +147,34 @@ public class MazeSearchState implements SearchState {
 	}
 
 	private int getPortalDistance() {
-		//entweder die normale heuristik direckt zum ziel oder wenn man kann zum portal,
-		//da es die möglichkeit gibt vom portal irgendwohin direckt neben das ziel zu kommen.
-		//bevorzugt sehr stark portale, man könnte vieleicht ne rekursion einbauen wo wir vom portal partner wieder die heuristik berechnen.
-		int minDistancePortal = maze.getMaxPortalDistance();
-		int minDistanceGoal = maze.getMaxPortalDistance();
+		// We calculate the minimal value of: either the direct Manhattan-distance 
+		// to a goal or the manhattan-distance to a portal plus the minimal 
+		// Manhattan-distance of this portal to a goal
+		int minDistance = this.getManhattenDistance();
 		int distance;
-		for (Point goal :maze.getGoalPoints()) {
-			distance = Math.abs(goal.x-position.x)+Math.abs(goal.y-position.y);
-			minDistanceGoal = Math.min(distance, minDistanceGoal);
-		}
 		for (Point portal : maze.getPortals().keySet()) {
-			distance = Math.abs(portal.x-position.x)+Math.abs(portal.y-position.y)+1;
-			minDistancePortal = Math.min(distance, minDistancePortal); 
+			// get the other end of the portal
+			Point target = maze.getPortals().get(portal);
+			// get the corresponding MazeSearchState 
+			MazeSearchState portalTargetState = getMazeSearchState(target, maze);
+			// get the minimal Manhattan-distance to a goal 
+			distance = portalTargetState.getManhattenDistance();
+			// add the distance to the portal
+			distance += Math.abs(portal.x-position.x)+Math.abs(portal.y-position.y);
+			// get the current minimum
+			minDistance = Math.min(distance, minDistance); 
 		}
-		return Math.min(minDistancePortal, minDistanceGoal);
+		return minDistance;
 	}
 
 	private int getManhattenDistance() {
+		// set initial min-distance to maximal Manhattan-distance 
 		int minDistance = maze.getMaxManhattenDistance();
 		int distance;
+		// find the distance to the nearest goal
 		for (Point goal :maze.getGoalPoints()) {
 			distance = Math.abs(goal.x-position.x)+Math.abs(goal.y-position.y);
+			// get the current minimum
 			minDistance = Math.min(distance,minDistance);
 		}
 		return minDistance;

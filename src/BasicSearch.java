@@ -2,6 +2,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.Timer;
+
 /**
  * An abstract base class implementing the generic Search Algorithm.
  * Every search strategy can extend this class, implementing only the 
@@ -14,6 +16,8 @@ public abstract class BasicSearch {
 	private LinkedList<SearchPath> solutions;
 	private SearchPath currentPath;
 	private int pathsAdded;
+	private int pathsExtended;
+	private int maxFrontierSize;
 	
 	/**
 	 * constructor 
@@ -32,8 +36,10 @@ public abstract class BasicSearch {
 		solutions = new  LinkedList<SearchPath>();
 		// the current searchPath which we need so we know where we are at the moment
 		currentPath = new SearchPath(new LinkedList<SearchState>());
-		// number of paths added to the frontier during the search. For statistics
+		// number of paths added to the frontier / extended during the search. For statistics
 		pathsAdded = 0;
+		pathsExtended = 0;
+		maxFrontierSize = 0;
 	}
 	
 	/**
@@ -51,10 +57,8 @@ public abstract class BasicSearch {
 	 * @param verbose
 	 */
 	public void search(boolean stopAfterFirstSolution, boolean multiplePathPruning, boolean cycleDetection, boolean verbose) {
+		long startTime = System.nanoTime();
 		while (!isFrontierEmpty()) {
-			if (verbose) {
-				System.out.println("Frontier-size:" + getFrontierSize() + ", currentPath-cost:" + currentPath.cost());
-			}
 			// get next Path from frontier
 			currentPath = removeNextPath();
 			// check whether it's a solution
@@ -64,6 +68,7 @@ public abstract class BasicSearch {
 				// clear visited states to enable the search for different solutions
 				visitedStates.clear();
 				if (verbose) {
+					System.out.println("Solution found!");
 					currentPath.print();
 					System.out.println("Frontier-size:" + getFrontierSize() + ", currentPath-cost:" + currentPath.cost());
 				}
@@ -74,11 +79,17 @@ public abstract class BasicSearch {
 			
 			}	
 			// expand the current path
+			pathsExtended++;
 			expandCurrentPath(multiplePathPruning, cycleDetection);
-			
+			maxFrontierSize = Math.max(maxFrontierSize, getFrontierSize());
 		}
+		// get time in millisecs
+		double timePassed = (System.nanoTime() - startTime);
 		if (verbose) {
 			System.out.println(solutions.size() + " solutions found, " + pathsAdded + " paths added.");
+			System.out.println("Time: " + timePassed / 1000000000 + "s");
+			System.out.println("Paths extended:" + pathsExtended);
+			System.out.println("Max Frontier Size:" + maxFrontierSize);
 		}	
 	}
 

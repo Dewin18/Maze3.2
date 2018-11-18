@@ -1,11 +1,9 @@
 import java.util.Comparator;
 
 /**
- * @TODO Comment
- * A child class of Comparator, to implement SearchPaths of A*-Heuristics. We add with each step the costs of the heuristic search. Our start node is the first node. 
- * We have two types of costs. The one is the distance from the start node to the current node. The second one is the distance from the current node to the end node.
- * We are comparing two Paths by their lowest cost, which is an addition of the two kinds of costs.
- *
+ * A child class of Comparator, to implement A* using BasicHeuristicSearch. 
+ * We compare two paths by the sum of the path cost and the heuristic value
+ * of the last element of the path
  */
 public class AStarComparator implements Comparator<SearchPath> {
 

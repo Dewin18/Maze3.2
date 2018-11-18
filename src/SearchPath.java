@@ -26,7 +26,7 @@ public class SearchPath {
 	 * @return
 	 */
 	public int cost() {
-		return searchStates.size();
+		return searchStates.size() - 1;
 	}
 
 	/**
