@@ -20,8 +20,12 @@ public class Main {
 
 	// retrieve the start spot from the location
 	Spot spot = maze[startRow][startColumn];
-	
+	Spot spot2 =  maze[7][14];
+	System.out.println(spot2.getSymbol());
 	//Create a new BFS
+	
+	A a = new A(spot,spot2);
+	
 	BFS  bfs = new BFS();
 	LinkedList<Spot> goalPath = bfs.search(spot);
 
