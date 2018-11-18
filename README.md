@@ -285,3 +285,223 @@ Frontier-size:32, currentPath-cost:43
 Enter 'q' to terminate SearchDemo
 §>
 ### <----- :output end ----->
+
+
+
+
+## 5.2
+#1
+We Decided to use the manhatten distance for the heuristic as it is underestimating the Distance but realtivly close as well.
+#2
+If the Heuristic is supposed to work with Portals we also have the possibilty that there is a shorter way then the manhatten distance (through a portal) therefore we need to adjust our heuristic. We did this by heavily underestimating the distance wich remains after going through a portal. There is a possibilty that right after we used the portal we are next to the goal.
+#3
+our Search goes through all possibiltes, doesnt find a soloution and then terminates.
+output:
+Enter 'q' to quit
+Press Enter to start BreadthFirstSearch.
+§>
+Frontier-size:1, currentPath-cost:0
+Frontier-size:4, currentPath-cost:1
+Frontier-size:6, currentPath-cost:2
+Frontier-size:8, currentPath-cost:2
+Frontier-size:7, currentPath-cost:2
+Frontier-size:7, currentPath-cost:2
+Frontier-size:9, currentPath-cost:3
+Frontier-size:9, currentPath-cost:3
+Frontier-size:9, currentPath-cost:3
+Frontier-size:11, currentPath-cost:3
+Frontier-size:10, currentPath-cost:3
+Frontier-size:10, currentPath-cost:3
+Frontier-size:10, currentPath-cost:3
+Frontier-size:12, currentPath-cost:4
+Frontier-size:11, currentPath-cost:4
+Frontier-size:11, currentPath-cost:4
+Frontier-size:11, currentPath-cost:4
+Frontier-size:11, currentPath-cost:4
+Frontier-size:12, currentPath-cost:4
+Frontier-size:12, currentPath-cost:4
+Frontier-size:12, currentPath-cost:4
+Frontier-size:12, currentPath-cost:4
+Frontier-size:11, currentPath-cost:4
+Frontier-size:11, currentPath-cost:5
+Frontier-size:10, currentPath-cost:5
+Frontier-size:10, currentPath-cost:5
+Frontier-size:10, currentPath-cost:5
+Frontier-size:12, currentPath-cost:5
+Frontier-size:11, currentPath-cost:5
+Frontier-size:11, currentPath-cost:5
+Frontier-size:11, currentPath-cost:5
+Frontier-size:11, currentPath-cost:5
+Frontier-size:11, currentPath-cost:5
+Frontier-size:10, currentPath-cost:5
+Frontier-size:11, currentPath-cost:6
+Frontier-size:11, currentPath-cost:6
+Frontier-size:10, currentPath-cost:6
+Frontier-size:10, currentPath-cost:6
+Frontier-size:11, currentPath-cost:6
+Frontier-size:10, currentPath-cost:6
+Frontier-size:10, currentPath-cost:6
+Frontier-size:10, currentPath-cost:6
+Frontier-size:10, currentPath-cost:6
+Frontier-size:9, currentPath-cost:6
+Frontier-size:8, currentPath-cost:7
+Frontier-size:7, currentPath-cost:7
+Frontier-size:7, currentPath-cost:7
+Frontier-size:6, currentPath-cost:7
+Frontier-size:6, currentPath-cost:7
+Frontier-size:5, currentPath-cost:7
+Frontier-size:5, currentPath-cost:7
+Frontier-size:4, currentPath-cost:7
+Frontier-size:3, currentPath-cost:7
+Frontier-size:3, currentPath-cost:8
+Frontier-size:2, currentPath-cost:8
+Frontier-size:1, currentPath-cost:8
+Frontier-size:1, currentPath-cost:9
+Frontier-size:1, currentPath-cost:10
+Frontier-size:2, currentPath-cost:11
+Frontier-size:3, currentPath-cost:12
+Frontier-size:2, currentPath-cost:12
+Frontier-size:3, currentPath-cost:13
+Frontier-size:2, currentPath-cost:13
+Frontier-size:3, currentPath-cost:14
+Frontier-size:2, currentPath-cost:14
+Frontier-size:3, currentPath-cost:15
+Frontier-size:2, currentPath-cost:15
+Frontier-size:3, currentPath-cost:16
+Frontier-size:3, currentPath-cost:16
+Frontier-size:4, currentPath-cost:17
+Frontier-size:4, currentPath-cost:17
+Frontier-size:4, currentPath-cost:17
+Frontier-size:4, currentPath-cost:18
+Frontier-size:4, currentPath-cost:18
+Frontier-size:4, currentPath-cost:18
+Frontier-size:4, currentPath-cost:18
+Frontier-size:4, currentPath-cost:19
+Frontier-size:4, currentPath-cost:19
+Frontier-size:3, currentPath-cost:19
+Frontier-size:3, currentPath-cost:19
+Frontier-size:3, currentPath-cost:20
+Frontier-size:2, currentPath-cost:20
+Frontier-size:2, currentPath-cost:20
+Frontier-size:1, currentPath-cost:21
+Frontier-size:2, currentPath-cost:21
+Frontier-size:2, currentPath-cost:22
+Frontier-size:2, currentPath-cost:22
+Frontier-size:2, currentPath-cost:23
+Frontier-size:2, currentPath-cost:23
+Frontier-size:2, currentPath-cost:24
+Frontier-size:2, currentPath-cost:24
+Frontier-size:3, currentPath-cost:25
+Frontier-size:2, currentPath-cost:25
+Frontier-size:3, currentPath-cost:26
+Frontier-size:2, currentPath-cost:26
+Frontier-size:3, currentPath-cost:27
+Frontier-size:2, currentPath-cost:27
+Frontier-size:2, currentPath-cost:28
+Frontier-size:1, currentPath-cost:28
+0 solutions found, 98 paths added.
+Enter 'q' to terminate BreadthFirstSearch and start DepthFirstSearch
+Press Enter to continue BFS.
+§>
+Frontier-size:1, currentPath-cost:0
+Frontier-size:4, currentPath-cost:1
+Frontier-size:6, currentPath-cost:2
+Frontier-size:8, currentPath-cost:3
+Frontier-size:9, currentPath-cost:4
+Frontier-size:9, currentPath-cost:5
+Frontier-size:10, currentPath-cost:6
+Frontier-size:11, currentPath-cost:7
+Frontier-size:12, currentPath-cost:8
+Frontier-size:13, currentPath-cost:9
+Frontier-size:15, currentPath-cost:10
+Frontier-size:16, currentPath-cost:11
+Frontier-size:18, currentPath-cost:12
+Frontier-size:19, currentPath-cost:13
+Frontier-size:18, currentPath-cost:14
+Frontier-size:18, currentPath-cost:14
+Frontier-size:19, currentPath-cost:15
+Frontier-size:19, currentPath-cost:16
+Frontier-size:20, currentPath-cost:17
+Frontier-size:20, currentPath-cost:18
+Frontier-size:20, currentPath-cost:19
+Frontier-size:21, currentPath-cost:20
+Frontier-size:22, currentPath-cost:21
+Frontier-size:23, currentPath-cost:22
+Frontier-size:24, currentPath-cost:23
+Frontier-size:24, currentPath-cost:24
+Frontier-size:24, currentPath-cost:25
+Frontier-size:24, currentPath-cost:26
+Frontier-size:24, currentPath-cost:27
+Frontier-size:24, currentPath-cost:28
+Frontier-size:25, currentPath-cost:29
+Frontier-size:25, currentPath-cost:30
+Frontier-size:25, currentPath-cost:31
+Frontier-size:26, currentPath-cost:32
+Frontier-size:26, currentPath-cost:33
+Frontier-size:26, currentPath-cost:34
+Frontier-size:27, currentPath-cost:35
+Frontier-size:28, currentPath-cost:36
+Frontier-size:29, currentPath-cost:37
+Frontier-size:30, currentPath-cost:38
+Frontier-size:30, currentPath-cost:39
+Frontier-size:30, currentPath-cost:40
+Frontier-size:31, currentPath-cost:41
+Frontier-size:32, currentPath-cost:42
+Frontier-size:33, currentPath-cost:43
+Frontier-size:34, currentPath-cost:44
+Frontier-size:34, currentPath-cost:45
+Frontier-size:34, currentPath-cost:46
+Frontier-size:35, currentPath-cost:47
+Frontier-size:35, currentPath-cost:48
+Frontier-size:35, currentPath-cost:49
+Frontier-size:35, currentPath-cost:50
+Frontier-size:34, currentPath-cost:51
+Frontier-size:33, currentPath-cost:48
+Frontier-size:32, currentPath-cost:45
+Frontier-size:31, currentPath-cost:44
+Frontier-size:30, currentPath-cost:43
+Frontier-size:29, currentPath-cost:42
+Frontier-size:29, currentPath-cost:39
+Frontier-size:30, currentPath-cost:40
+Frontier-size:31, currentPath-cost:41
+Frontier-size:32, currentPath-cost:42
+Frontier-size:32, currentPath-cost:43
+Frontier-size:31, currentPath-cost:44
+Frontier-size:30, currentPath-cost:43
+Frontier-size:29, currentPath-cost:42
+Frontier-size:28, currentPath-cost:41
+Frontier-size:27, currentPath-cost:38
+Frontier-size:26, currentPath-cost:37
+Frontier-size:25, currentPath-cost:36
+Frontier-size:24, currentPath-cost:33
+Frontier-size:23, currentPath-cost:30
+Frontier-size:22, currentPath-cost:24
+Frontier-size:21, currentPath-cost:23
+Frontier-size:21, currentPath-cost:22
+Frontier-size:21, currentPath-cost:23
+Frontier-size:22, currentPath-cost:24
+Frontier-size:21, currentPath-cost:25
+Frontier-size:20, currentPath-cost:25
+Frontier-size:19, currentPath-cost:21
+Frontier-size:19, currentPath-cost:18
+Frontier-size:18, currentPath-cost:19
+Frontier-size:17, currentPath-cost:16
+Frontier-size:16, currentPath-cost:13
+Frontier-size:15, currentPath-cost:13
+Frontier-size:14, currentPath-cost:12
+Frontier-size:13, currentPath-cost:11
+Frontier-size:12, currentPath-cost:11
+Frontier-size:11, currentPath-cost:10
+Frontier-size:10, currentPath-cost:9
+Frontier-size:9, currentPath-cost:8
+Frontier-size:8, currentPath-cost:7
+Frontier-size:7, currentPath-cost:5
+Frontier-size:6, currentPath-cost:4
+Frontier-size:5, currentPath-cost:4
+Frontier-size:4, currentPath-cost:3
+Frontier-size:3, currentPath-cost:3
+Frontier-size:2, currentPath-cost:2
+Frontier-size:1, currentPath-cost:2
+0 solutions found, 98 paths added.
+Enter 'q' to terminate SearchDemo
+§>
