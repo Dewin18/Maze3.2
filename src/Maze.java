@@ -23,8 +23,10 @@ public class Maze {
     private HashMap<Point, Point> portals;
 
 	private List<Point> goalPoints;
+	private List<Point> portalPoints;
 
 	private int maxManhattenDistance;
+	private int maxPortalDistance;
 	
 	private Maze(char[][] maze, int rows, int columns) {
 		this.maze = maze;
@@ -34,7 +36,10 @@ public class Maze {
 		this.portals = new HashMap<Point,Point>();
 		this.goalPoints = new LinkedList<Point>();
 		this.maxManhattenDistance = maxColumns*maxRows;
-		
+		this.maxPortalDistance = maxManhattenDistance;
+		for (int i = 0; i < portals.size(); i++) {
+			portalPoints.add(portals.get(i));
+		}
 	}
     
 	/**
@@ -273,6 +278,15 @@ public class Maze {
 	 */
 	public int getMaxManhattenDistance() {
 		return maxManhattenDistance;
+	}
+
+	public int getMaxPortalDistance() {
+		return maxPortalDistance;
+	}
+
+	public List<Point> getPortalPoints() {
+		// TODO Auto-generated method stub
+		return portalPoints;
 	}
 	
 }
