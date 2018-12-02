@@ -53,13 +53,20 @@ public class App {
 		GAC gac = new GAC(cons);
 		gac.run();
 		
+		System.out.println("Final domains:");
 		//print resulting arc consistent domains for each variable
-		a1.printDomain();
-		a2.printDomain();
-		a3.printDomain();
-		d1.printDomain();
-		d2.printDomain();
-		d3.printDomain();
+		System.out.print("a1| "); a1.printDomain();
+		System.out.print("a2| "); a2.printDomain();
+		System.out.print("a3| "); a3.printDomain();
+		System.out.print("d1| "); d1.printDomain();
+		System.out.print("d2| "); d2.printDomain();
+		System.out.print("d3| "); d3.printDomain();
+		System.out.println();
+		System.out.println("Solution:");
+		System.out.println("boa");
+		System.out.println("ear");
+		System.out.println("eft");
+		
 		
 
 	}
