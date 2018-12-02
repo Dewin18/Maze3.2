@@ -5,6 +5,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 
+/**
+ * Class with Generalized arc consistency algorithm
+ *
+ */
 public class GAC {
 	
 	private HashSet<Constraint> cons;
@@ -15,6 +19,11 @@ public class GAC {
 		this.cons = cons;
 	}
 	
+	 /**
+     * used for the solution of constraint satisfaction problems.
+     * operates on constraints, variables, and the variables domains (scopes).  
+     * domains are made consistent with constraints.
+     */
 	public void run() {
 		for (Constraint con: cons) {
 			for (Variable var: con.getVars()) {

@@ -1,5 +1,9 @@
 package constraints;
 
+/**
+ * class Arc
+ *
+ */
 public class Arc {
 
 	

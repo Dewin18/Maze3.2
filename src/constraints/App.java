@@ -2,6 +2,10 @@ package constraints;
 
 import java.util.HashSet;
 
+/**
+ * initializes a list of domains and it´s variables.
+ * starts the class GAC with Generalized arc consistency algorithm.
+ */
 public class App {
 
 	public static void main(String[] args) {

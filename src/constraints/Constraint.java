@@ -2,6 +2,10 @@ package constraints;
 
 import java.util.HashSet;
 
+/**
+ * class Constraint
+ *
+ */
 public class Constraint {
 	HashSet<Variable> variables;
 	private Variable horizontal;

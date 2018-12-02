@@ -2,6 +2,10 @@ package constraints;
 
 import java.util.HashSet;
 
+/**
+ * class Variable
+ *
+ */
 public class Variable {
 	private HashSet<String> domain;
 
